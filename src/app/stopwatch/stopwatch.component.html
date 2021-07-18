@@ -1,0 +1,13 @@
+<div>
+    <div>Time:{{displayTime()}}</div>
+    <div>
+        <button (click)="onStart()">Start</button>
+        <button (click)="onPause()">Pause</button>
+        <button (click)="onRestart()">Restart</button>
+    </div>
+    <div>
+        <input #newMinutes [value]="minutes">
+        <input #newSeconds [value]="seconds">
+        <button (click)="updateTime(newMinutes,newSeconds)">Okay</button>
+    </div>
+</div>
