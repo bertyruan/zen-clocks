@@ -1,12 +1,14 @@
 import { Component, OnInit } from "@angular/core";
-import { BehaviorSubject, interval, NEVER, noop, Subscription } from "rxjs";
-import { mapTo, scan, startWith, switchMap, takeWhile, tap } from "rxjs/operators"
+import { BehaviorSubject, combineLatest, interval, NEVER, noop, of, Subscription } from "rxjs";
+import { first, map, mapTo, scan, startWith, switchMap, switchMapTo, takeWhile, tap } from "rxjs/operators"
 
 enum TimerEvent {
     PAUSE,
     START,
-    RESTART
+    RESTART,
+    NEWTIME
 }
+interface time {minutes: number, seconds: number}
 @Component({
     selector: 'app-stopwatch',
     templateUrl: './stopwatch.component.html',
@@ -15,13 +17,15 @@ enum TimerEvent {
 export class StopwatchComponent implements OnInit {
     timeToggler = new BehaviorSubject<TimerEvent>(TimerEvent.PAUSE);
     timer$ : Subscription;
-    minutes : number;
-    seconds : number;
+    minutes = 1;
+    seconds = 0;
+    newTimer = new BehaviorSubject<time>({minutes: 1, seconds: 0});
+    
+
+    
+
     constructor() { 
-        this.minutes = 21;
-        this.seconds = 0;
-        this.timer$ = this.start();
-        
+        this.timer$ = this.start(); 
     }
 
     ngOnInit(): void {
@@ -38,10 +42,9 @@ export class StopwatchComponent implements OnInit {
         this.timeToggler.next(TimerEvent.RESTART);
     }
     updateTime(newMinutes: any, newSeconds:any){
-        this.timer$.unsubscribe();
-        this.minutes = newMinutes.value;
-        this.seconds = newSeconds.value;
-        this.timer$ = this.start();
+        this.newTimer.next({minutes: newMinutes.value, seconds: newSeconds.value});
+        console.log(newMinutes.value, newSeconds.value);
+        this.timeToggler.next(TimerEvent.NEWTIME);
     }
 
     displayTime() : string {
@@ -51,14 +54,19 @@ export class StopwatchComponent implements OnInit {
     }
 
     private start() {
-        const total = (this.minutes * 60 + this.seconds) ;
-        return this.timeToggler.pipe(
-            switchMap(t => {
+        return combineLatest([this.timeToggler, this.newTimer]).pipe(
+            map(arr => [arr[0], arr[1].minutes * 60 + arr[1].seconds]),
+            tap(console.log),
+            switchMap(arr => {
+                let t = arr[0];
                 if(t === TimerEvent.PAUSE) return NEVER;
-                if(t === TimerEvent.START) return interval(1000).pipe(mapTo(-1));
-                return interval(1000).pipe(mapTo(-1), startWith(total));
+                return interval(1000).pipe(mapTo(TimerEvent.START), startWith(arr));
             }),
-            scan((timeLeft, time)=>time === -1 ? timeLeft + time : time, total),
+            scan((timeLeft : number, arr)=> {
+                if(arr[0] === TimerEvent.NEWTIME) return arr[1];
+                if(arr[0] === TimerEvent.RESTART) return arr[1];
+                return timeLeft - 1;
+            }, 60),
             takeWhile((timeLeft) => timeLeft >= 0)
         ).subscribe(timeLeft => {
             this.minutes = Math.floor(timeLeft / 60); 
