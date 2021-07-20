@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { BehaviorSubject, combineLatest, interval, NEVER, noop, of, Subscription } from "rxjs";
 import { first, map, mapTo, scan, startWith, switchMap, switchMapTo, takeWhile, tap } from "rxjs/operators"
+import { StopwatchService } from "./stopwatch.service";
 
 enum TimerEvent {
     PAUSE,
@@ -15,14 +16,14 @@ interface time {minutes: number, seconds: number}
     styleUrls: ['./stopwatch.component.css']
 })
 export class StopwatchComponent implements OnInit {
-    timeToggler$ = new BehaviorSubject<TimerEvent>(TimerEvent.PAUSE);
-    timer$ : Subscription;
+    timeEvents$ = new BehaviorSubject<TimerEvent>(TimerEvent.PAUSE);
+    event1$ : Subscription;
     minutes = 1;
     seconds = 0;
-    newTimer$ = new BehaviorSubject<time>({minutes: this.minutes, seconds: this.seconds});
+    timeValues$ = new BehaviorSubject<time>({minutes: this.minutes, seconds: this.seconds});
     
-    constructor() { 
-        this.timer$ = this.start(); 
+    constructor(stopwatchService : StopwatchService) { 
+        this.event1$ = this.start(); 
     }
 
     ngOnInit(): void {
@@ -30,17 +31,17 @@ export class StopwatchComponent implements OnInit {
     }
 
     onStart() {
-        this.timeToggler$.next(TimerEvent.START);
+        this.timeEvents$.next(TimerEvent.START);
     }
     onPause() {
-        this.timeToggler$.next(TimerEvent.PAUSE);
+        this.timeEvents$.next(TimerEvent.PAUSE);
     }
     onRestart() {
-        this.timeToggler$.next(TimerEvent.RESTART);
+        this.timeEvents$.next(TimerEvent.RESTART);
     }
     updateTime(newMinutes: any, newSeconds:any){
-        this.newTimer$.next({minutes: newMinutes.value, seconds: newSeconds.value});
-        this.timeToggler$.next(TimerEvent.NEWTIME);
+        this.timeValues$.next({minutes: newMinutes.value, seconds: newSeconds.value});
+        this.timeEvents$.next(TimerEvent.NEWTIME);
     }
 
     displayTime() : string {
@@ -50,7 +51,7 @@ export class StopwatchComponent implements OnInit {
     }
 
     private start() {
-        return combineLatest([this.timeToggler$, this.newTimer$]).pipe(
+        return combineLatest([this.timeEvents$, this.timeValues$]).pipe(
             map(arr => {
                 let toSeconds = arr[1].minutes * 60 + (arr[1].seconds * 1);
                 return [arr[0], toSeconds] 

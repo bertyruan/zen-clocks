@@ -2,8 +2,8 @@
     <div>
         <div>Time:{{displayTime()}}</div>
         <div>
-            <input #newMinutes [value]="(newTimer$ | async)?.minutes">
-            <input #newSeconds [value]="(newTimer$ | async)?.seconds">
+            <input #newMinutes [value]="(timeValues$ | async)?.minutes">
+            <input #newSeconds [value]="(timeValues$ | async)?.seconds">
             <button (click)="updateTime(newMinutes,newSeconds)">Okay</button>
         </div>
         <button>Add Split</button>
@@ -14,5 +14,5 @@
         <button (click)="onPause()">Pause</button>
         <button (click)="onRestart()">Restart</button>
     </div>
-   
+    <app-timer></app-timer>
 </div>
