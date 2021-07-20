@@ -39,8 +39,12 @@ export class StopwatchComponent implements OnInit {
         this.stopwatchService.timeEvents$.next(TimerEvent.RESTART);
     }
     updateTime(newMinutes: any, newSeconds:any){
-        this.stopwatchService.timeValues$.next(new TimeValues(newMinutes.value, newSeconds.value));
+        let a = new TimeValues(+newMinutes.value, +newSeconds.value);
+        this.stopwatchService.timeValues$.next(a);
         this.stopwatchService.timeEvents$.next(TimerEvent.NEWTIME);
+    }
+    addSplit() {
+        console.log("TODO!");
     }
 
     displayTime() : string {

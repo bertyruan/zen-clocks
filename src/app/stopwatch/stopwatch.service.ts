@@ -17,8 +17,7 @@ export class StopwatchService {
             tap(arr => console.log(arr[0], arr[1].isValid)),
             filter(arr => arr[1].isValid),
             map(arr => {
-                let toSeconds = arr[1].minutes * 60 + (arr[1].seconds * 1);
-                return [arr[0], toSeconds] 
+                return [arr[0], arr[1].toSeconds()] 
             }),
             tap(console.log),
             switchMap(arr => {
