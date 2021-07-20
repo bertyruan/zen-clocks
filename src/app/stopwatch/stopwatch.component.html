@@ -6,8 +6,8 @@
         <button (click)="onRestart()">Restart</button>
     </div>
     <div>
-        <input #newMinutes [value]="minutes">
-        <input #newSeconds [value]="seconds">
+        <input #newMinutes [value]="(newTimer$ | async)?.minutes">
+        <input #newSeconds [value]="(newTimer$ | async)?.seconds">
         <button (click)="updateTime(newMinutes,newSeconds)">Okay</button>
     </div>
 </div>

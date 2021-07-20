@@ -15,15 +15,12 @@ interface time {minutes: number, seconds: number}
     styleUrls: ['./stopwatch.component.css']
 })
 export class StopwatchComponent implements OnInit {
-    timeToggler = new BehaviorSubject<TimerEvent>(TimerEvent.PAUSE);
+    timeToggler$ = new BehaviorSubject<TimerEvent>(TimerEvent.PAUSE);
     timer$ : Subscription;
     minutes = 1;
     seconds = 0;
-    newTimer = new BehaviorSubject<time>({minutes: 1, seconds: 0});
+    newTimer$ = new BehaviorSubject<time>({minutes: this.minutes, seconds: this.seconds});
     
-
-    
-
     constructor() { 
         this.timer$ = this.start(); 
     }
@@ -33,18 +30,17 @@ export class StopwatchComponent implements OnInit {
     }
 
     onStart() {
-        this.timeToggler.next(TimerEvent.START);
+        this.timeToggler$.next(TimerEvent.START);
     }
     onPause() {
-        this.timeToggler.next(TimerEvent.PAUSE);
+        this.timeToggler$.next(TimerEvent.PAUSE);
     }
     onRestart() {
-        this.timeToggler.next(TimerEvent.RESTART);
+        this.timeToggler$.next(TimerEvent.RESTART);
     }
     updateTime(newMinutes: any, newSeconds:any){
-        this.newTimer.next({minutes: newMinutes.value, seconds: newSeconds.value});
-        console.log(newMinutes.value, newSeconds.value);
-        this.timeToggler.next(TimerEvent.NEWTIME);
+        this.newTimer$.next({minutes: newMinutes.value, seconds: newSeconds.value});
+        this.timeToggler$.next(TimerEvent.NEWTIME);
     }
 
     displayTime() : string {
@@ -54,19 +50,24 @@ export class StopwatchComponent implements OnInit {
     }
 
     private start() {
-        return combineLatest([this.timeToggler, this.newTimer]).pipe(
-            map(arr => [arr[0], arr[1].minutes * 60 + arr[1].seconds]),
+        return combineLatest([this.timeToggler$, this.newTimer$]).pipe(
+            map(arr => {
+                let toSeconds = arr[1].minutes * 60 + (arr[1].seconds * 1);
+                return [arr[0], toSeconds] 
+            }),
             tap(console.log),
             switchMap(arr => {
                 let t = arr[0];
                 if(t === TimerEvent.PAUSE) return NEVER;
-                return interval(1000).pipe(mapTo(TimerEvent.START), startWith(arr));
+                return interval(1000).pipe(mapTo([TimerEvent.START, arr[1]]), startWith(arr));
             }),
             scan((timeLeft : number, arr)=> {
                 if(arr[0] === TimerEvent.NEWTIME) return arr[1];
                 if(arr[0] === TimerEvent.RESTART) return arr[1];
                 return timeLeft - 1;
-            }, 60),
+            }, this.minutes * 60 + this.seconds),
+            tap(console.log),
+            tap(timeLeft => { if(timeLeft === 0) console.log("FINISHED")}),
             takeWhile((timeLeft) => timeLeft >= 0)
         ).subscribe(timeLeft => {
             this.minutes = Math.floor(timeLeft / 60); 
