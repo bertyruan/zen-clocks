@@ -2,10 +2,11 @@
     <div>
         <div>Time:{{displayTime()}}</div>
         <div>
-            <input #newMinutes [value]="(timeValues$ | async)?.minutes">
-            <input #newSeconds [value]="(timeValues$ | async)?.seconds">
+            <input #newMinutes [value]="(clockValue1$ | async)?.minutes">
+            <input #newSeconds [value]="(clockValue1$ | async)?.seconds">
             <button (click)="updateTime(newMinutes,newSeconds)">Okay</button>
         </div>
+        <!-- TODO: Add more splits -->
         <button>Add Split</button>
     </div>
     
