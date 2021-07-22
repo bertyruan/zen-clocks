@@ -12,17 +12,16 @@ import { StopwatchService } from "./stopwatch.service";
 })
 export class StopwatchComponent implements OnInit {
     clock1$ : Subscription;
-    clockValue1$: Observable<TimeValues>;
+    timeValue: TimeValues;
     minutes = 1;
     seconds = 0;
     
     constructor(private stopwatchService : StopwatchService) { 
-        this.clock1$ = this.stopwatchService.initNewClock(1,0).subscribe(timeLeft => {
+        this.clock1$ = this.stopwatchService.getClock(1,0).subscribe(timeLeft => {
             this.minutes = Math.floor(timeLeft / 60); 
             this.seconds = timeLeft - (this.minutes * 60);
         });
-        this.stopwatchService.timeValues$.next(new TimeValues(this.minutes, this.seconds));
-        this.clockValue1$ = this.stopwatchService.timeValues$.asObservable();
+        this.timeValue = new TimeValues(this.minutes, this.seconds);
     }
 
     ngOnInit(): void {
@@ -39,21 +38,17 @@ export class StopwatchComponent implements OnInit {
         this.stopwatchService.timeEvents$.next(TimerEvent.RESTART);
     }
     updateTime(newMinutes: any, newSeconds:any){
-        let a = new TimeValues(+newMinutes.value, +newSeconds.value);
-        this.stopwatchService.timeValues$.next(a);
+        this.timeValue = new TimeValues(newMinutes.value, newSeconds.value);
+        this.stopwatchService.timeValues$.next(this.timeValue);
         this.stopwatchService.timeEvents$.next(TimerEvent.NEWTIME);
     }
     addSplit() {
         console.log("TODO!");
     }
 
-    displayTime() : string {
+    get displayTime() : string {
         let m = this.minutes < 10 ? "0" + this.minutes.toString() : this.minutes.toString();
         let s = this.seconds < 10 ? "0" + this.seconds.toString() : this.seconds.toString();
         return `${m}:${s}`;
-    }
-
-    private initClock() {
-        
     }
 }

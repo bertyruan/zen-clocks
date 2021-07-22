@@ -16,8 +16,8 @@ export class TimeValues implements _TimeValues {
     isValid = false;
 
     constructor(minutes: number, seconds: number) {
-        this.minutes = minutes;
-        this.seconds = seconds;
+        this.minutes = +minutes;
+        this.seconds = +seconds;
         this.isValid = true;
     }
     
