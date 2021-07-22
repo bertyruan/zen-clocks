@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, combineLatest, interval, NEVER, Observable } from "rxjs";
 import { map, tap, switchMap, mapTo, scan, startWith, takeWhile, filter } from "rxjs/internal/operators";
-import { TimerEvent, TimeValues } from "./stopwatch-values";
+import { TimerEvent, TimeValue } from "./stopwatch-values";
 
 @Injectable({providedIn: "root"})
 export class StopwatchService {
@@ -9,14 +9,14 @@ export class StopwatchService {
     public timeEvents$ = new BehaviorSubject<TimerEvent>(TimerEvent.PAUSE);
     //public timeEvents$ = this.timeEvents.asObservable();
     
-    public timeValues$ = new BehaviorSubject<TimeValues>({} as TimeValues);
+    public timeValues$ = new BehaviorSubject<TimeValue>({} as TimeValue);
     //public timeValues$ = this.timeValues.asObservable();
 
     public getClock(minutes: number, seconds: number) : Observable<number> {
         if(!this.clock) {
             this.clock = this.initClock(minutes, seconds);
         }
-        this.timeValues$.next(new TimeValues(minutes, seconds));
+        this.timeValues$.next(new TimeValue(minutes, seconds));
         this.timeEvents$.next(TimerEvent.PAUSE);
         return this.clock;
     }
