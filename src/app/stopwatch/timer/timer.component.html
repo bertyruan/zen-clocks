@@ -1,1 +1,8 @@
-Hello
+<div>
+    <div>Time:{{displayTime}}</div>
+    <div>
+        <input #newMinutes [value]="timeValue.minutes">
+        <input #newSeconds [value]="timeValue.seconds">
+        <button (click)="updateTime(newMinutes,newSeconds)">Okay</button>
+    </div>
+</div>

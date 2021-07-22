@@ -1,12 +1,6 @@
 <div>
     <div>
-        <div>Time:{{displayTime}}</div>
-        <div>
-            <input #newMinutes [value]="timeValue.minutes">
-            <input #newSeconds [value]="timeValue.seconds">
-            <button (click)="updateTime(newMinutes,newSeconds)">Okay</button>
-        </div>
-        <!-- TODO: Add more splits -->
+        <app-timer></app-timer>
         <button (click)="addSplit()">Add Split</button>
     </div>
     
@@ -15,5 +9,4 @@
         <button (click)="onPause()">Pause</button>
         <button (click)="onRestart()">Restart</button>
     </div>
-    <app-timer></app-timer>
 </div>
