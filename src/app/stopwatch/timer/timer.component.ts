@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { Subscription } from "rxjs";
-import { TimerEvent, TimeValues } from "../stopwatch-values";
+import { TimerEvent, TimeValue } from "../stopwatch-values";
 import { StopwatchService } from "../stopwatch.service";
 
 @Component({
@@ -9,7 +9,7 @@ import { StopwatchService } from "../stopwatch.service";
 })
 export class TimerComponent {
     clock1$ : Subscription;
-    timeValue: TimeValues;
+    timeValue: TimeValue;
     minutes = 1;
     seconds = 0;
 
@@ -18,7 +18,7 @@ export class TimerComponent {
             this.minutes = Math.floor(timeLeft / 60); 
             this.seconds = timeLeft - (this.minutes * 60);
         });
-        this.timeValue = new TimeValues(this.minutes, this.seconds);
+        this.timeValue = new TimeValue(this.minutes, this.seconds);
     }
 
     get displayTime() : string {
@@ -28,7 +28,7 @@ export class TimerComponent {
     }
 
     updateTime(newMinutes: any, newSeconds:any){
-        this.timeValue = new TimeValues(newMinutes.value, newSeconds.value);
+        this.timeValue = new TimeValue(newMinutes.value, newSeconds.value);
         this.stopwatchService.timeValues$.next(this.timeValue);
         this.stopwatchService.timeEvents$.next(TimerEvent.NEWTIME);
     }
