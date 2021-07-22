@@ -17,11 +17,17 @@ export class StopwatchComponent implements OnInit {
     seconds = 0;
     
     constructor(private stopwatchService : StopwatchService) { 
-        this.clock1$ = this.stopwatchService.getClock(1,0).subscribe(timeLeft => {
+        this.clock1$ = this.stopwatchService.getClock(this.minutes,this.seconds).subscribe(timeLeft => {
             this.minutes = Math.floor(timeLeft / 60); 
             this.seconds = timeLeft - (this.minutes * 60);
         });
         this.timeValue = new TimeValues(this.minutes, this.seconds);
+    }
+
+    get displayTime() : string {
+        let m = this.minutes < 10 ? "0" + this.minutes.toString() : this.minutes.toString();
+        let s = this.seconds < 10 ? "0" + this.seconds.toString() : this.seconds.toString();
+        return `${m}:${s}`;
     }
 
     ngOnInit(): void {
@@ -46,9 +52,4 @@ export class StopwatchComponent implements OnInit {
         console.log("TODO!");
     }
 
-    get displayTime() : string {
-        let m = this.minutes < 10 ? "0" + this.minutes.toString() : this.minutes.toString();
-        let s = this.seconds < 10 ? "0" + this.seconds.toString() : this.seconds.toString();
-        return `${m}:${s}`;
-    }
 }
