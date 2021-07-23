@@ -3,7 +3,8 @@ import { Component, OnInit } from "@angular/core";
 import { BehaviorSubject, combineLatest, interval, NEVER, noop, Observable, of, Subscription } from "rxjs";
 import { first, map, mapTo, scan, startWith, switchMap, switchMapTo, takeWhile, tap } from "rxjs/operators"
 import { TimerEvent, Timer, TimeValue } from "./timer-constants";
-import { TimerService } from "./timer.service";
+import { TimerService } from "./timer/timer.service";
+import { TimercontrolService } from "./timercontrol.service";
 
 @Component({
     selector: 'app-timercontrol',
@@ -11,17 +12,18 @@ import { TimerService } from "./timer.service";
     styleUrls: ['./timercontrol.component.css']
 })
 export class TimercontrolComponent implements OnInit {
-    timers : Timer[] = [{id: 1, state: TimerEvent.START, value: new TimeValue()}];
+    timers : Timer[] = [];
 
-    constructor(private timerService: TimerService) {}
-    begin = true;
+    constructor(private timerService: TimerService, private timercontroService: TimercontrolService) {}
+
     ngOnInit(): void {
-        
+        this.addSplit();
     }
 
     onStart() {
-        this.begin = true;
+        this.timercontroService.start();
         this.timerService.timeEvents$.next(TimerEvent.START);
+        
     }
     onPause() {
         this.timerService.timeEvents$.next(TimerEvent.PAUSE);
@@ -31,13 +33,14 @@ export class TimercontrolComponent implements OnInit {
     }
     
     addSplit() {
-        const id = Math.floor(Math.random() * 1000) + Math.floor(Math.random() * 1000);
-        console.log(id);
-        this.timers.push({id: id, state: TimerEvent.PAUSE, value: new TimeValue()})
+        const newTimer = new TimeValue();
+        const id = this.timercontroService.addToQueue(newTimer);
+        this.timers.push({id: id, value: newTimer, order: 0});
     }
     removeSplit(id: number) {
         if(this.timers.length > 1) {
             this.timers.splice(this.timers.findIndex(t => t.id === id),1);
+            this.timercontroService.removeFromQueue(id);
         }
     }
 

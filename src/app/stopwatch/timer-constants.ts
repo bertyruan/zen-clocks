@@ -13,11 +13,11 @@ interface _TimeValue {
 
 export interface Timer {
     id: number,
-    value: TimeValue
-    state: TimerEvent
+    value: TimeValue,
+    order: number
 }
 
-export class TimeValue implements _TimeValue {
+export class TimeValue implements _TimeValue  {
     minutes: number;
     seconds: number;
     isValid = false;

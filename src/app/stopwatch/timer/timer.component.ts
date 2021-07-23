@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { Observable, Subscription } from "rxjs";
 import { Timer, TimerEvent, TimeValue } from "../timer-constants";
-import { TimerService } from "../timer.service";
+import { TimercontrolService } from "../timercontrol.service";
+import { TimerService } from "./timer.service";
 
 @Component({
     selector: 'app-timer',
@@ -15,25 +16,24 @@ export class TimerComponent implements OnInit {
     @Input()
     timer!: Timer;
 
-    @Input("start")
-    start! : boolean;
-
-    constructor(private timerService : TimerService) {}
+    constructor(private timerService : TimerService, private timercontrol : TimercontrolService) {}
 
     ngOnInit() {
         this.timeDisplay = this.timer.value;
         this.timeValue = this.timer.value;
         this.clock1$ = this.timerService.getClock(this.timer.value.minutes,this.timer.value.seconds);
-        this.startClock();
+        this.timercontrol.startTimer$.subscribe(c => {
+            if(c.id === this.timer.id) {
+                this.startClock();
+            }
+        })
     }
 
     startClock() {
-        if(this.start) {
-            this.clock1$.subscribe(timeLeft => {
-                this.timeDisplay.minutes = Math.floor(timeLeft / 60); 
-                this.timeDisplay.seconds = timeLeft - (this.timeDisplay.minutes * 60);
-            });
-        }    
+        this.clock1$.subscribe({next: (timeLeft) => {
+            this.timeDisplay.minutes = Math.floor(timeLeft / 60); 
+            this.timeDisplay.seconds = timeLeft - (this.timeDisplay.minutes * 60);
+        }, complete: () => this.timercontrol.endTimer$.next(this.timer)});
     }
 
     get displayTime() : string {
@@ -43,6 +43,10 @@ export class TimerComponent implements OnInit {
     updateTime(newMinutes: any, newSeconds:any){
         this.timeValue = new TimeValue(newMinutes.value, newSeconds.value);
         this.timerService.timeValues$.next(this.timeValue);
-        //this.stopwatchService.timeEvents$.next(TimerEvent.NEWTIME);
+        this.timerService.timeEvents$.next(TimerEvent.NEWTIME);
     }
+}
+
+function next(next: any, arg1: (timeLeft: any) => void) {
+    throw new Error("Function not implemented.");
 }
