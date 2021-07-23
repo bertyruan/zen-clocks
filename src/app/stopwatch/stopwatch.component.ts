@@ -11,15 +11,16 @@ import { StopwatchService } from "./stopwatch.service";
     styleUrls: ['./stopwatch.component.css']
 })
 export class StopwatchComponent implements OnInit {
-    timers : Timer[] = [{id: 1, state: TimerEvent.PAUSE, value: new TimeValue()}];
+    timers : Timer[] = [{id: 1, state: TimerEvent.START, value: new TimeValue()}];
 
     constructor(private stopwatchService: StopwatchService) {}
-
+    begin = true;
     ngOnInit(): void {
         
     }
 
     onStart() {
+        this.begin = true;
         this.stopwatchService.timeEvents$.next(TimerEvent.START);
     }
     onPause() {

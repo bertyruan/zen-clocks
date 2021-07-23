@@ -1,7 +1,7 @@
 <div>
     <div>
         <ng-container *ngFor="let timer of timers">
-            <app-timer timer="timer"></app-timer>
+            <app-timer [timer]="timer" [start]="begin"></app-timer>
             <button (click)="removeSplit(timer.id)">Remove</button>
         </ng-container>
         <button (click)="addSplit()">Add Split</button>
