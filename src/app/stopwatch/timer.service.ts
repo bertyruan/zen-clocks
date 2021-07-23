@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, combineLatest, interval, NEVER, Observable } from "rxjs";
 import { map, tap, switchMap, mapTo, scan, startWith, takeWhile, filter } from "rxjs/internal/operators";
-import { TimerEvent, TimeValue } from "./stopwatch-values";
+import { TimerEvent, TimeValue } from "./timer-constants";
 
 @Injectable({providedIn: "root"})
-export class StopwatchService {
+export class TimerService {
     private clock!: Observable<number>;
     public timeEvents$ = new BehaviorSubject<TimerEvent>(TimerEvent.PAUSE);
     //public timeEvents$ = this.timeEvents.asObservable();

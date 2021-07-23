@@ -7,7 +7,7 @@ import { SandboxComponent } from './sandbox/sandbox.component';
 import { AppRoutingModule } from './app-routing.module';
 import { TetrisComponent } from './tetris/tetris.component';
 import { HomeComponent } from './home/home.component';
-import { StopwatchModule } from './stopwatch/stopwatch.module';
+import { TimercontrolModule } from './stopwatch/timercontrol.module';
 
 @NgModule({ 
   declarations: [
@@ -20,7 +20,7 @@ import { StopwatchModule } from './stopwatch/stopwatch.module';
     BrowserModule,
     AppRoutingModule,
     FlexLayoutModule,
-    StopwatchModule
+    TimercontrolModule
   ],
   providers: [],
   bootstrap: [AppComponent]

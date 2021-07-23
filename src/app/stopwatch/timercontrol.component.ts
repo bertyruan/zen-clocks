@@ -2,18 +2,18 @@ import { Time } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { BehaviorSubject, combineLatest, interval, NEVER, noop, Observable, of, Subscription } from "rxjs";
 import { first, map, mapTo, scan, startWith, switchMap, switchMapTo, takeWhile, tap } from "rxjs/operators"
-import { TimerEvent, Timer, TimeValue } from "./stopwatch-values";
-import { StopwatchService } from "./stopwatch.service";
+import { TimerEvent, Timer, TimeValue } from "./timer-constants";
+import { TimerService } from "./timer.service";
 
 @Component({
-    selector: 'app-stopwatch',
-    templateUrl: './stopwatch.component.html',
-    styleUrls: ['./stopwatch.component.css']
+    selector: 'app-timercontrol',
+    templateUrl: './timercontrol.component.html',
+    styleUrls: ['./timercontrol.component.css']
 })
-export class StopwatchComponent implements OnInit {
+export class TimercontrolComponent implements OnInit {
     timers : Timer[] = [{id: 1, state: TimerEvent.START, value: new TimeValue()}];
 
-    constructor(private stopwatchService: StopwatchService) {}
+    constructor(private timerService: TimerService) {}
     begin = true;
     ngOnInit(): void {
         
@@ -21,13 +21,13 @@ export class StopwatchComponent implements OnInit {
 
     onStart() {
         this.begin = true;
-        this.stopwatchService.timeEvents$.next(TimerEvent.START);
+        this.timerService.timeEvents$.next(TimerEvent.START);
     }
     onPause() {
-        this.stopwatchService.timeEvents$.next(TimerEvent.PAUSE);
+        this.timerService.timeEvents$.next(TimerEvent.PAUSE);
     }
     onRestart() {
-        this.stopwatchService.timeEvents$.next(TimerEvent.RESTART);
+        this.timerService.timeEvents$.next(TimerEvent.RESTART);
     }
     
     addSplit() {

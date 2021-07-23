@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { Observable, Subscription } from "rxjs";
-import { Timer, TimerEvent, TimeValue } from "../stopwatch-values";
-import { StopwatchService } from "../stopwatch.service";
+import { Timer, TimerEvent, TimeValue } from "../timer-constants";
+import { TimerService } from "../timer.service";
 
 @Component({
     selector: 'app-timer',
@@ -18,12 +18,12 @@ export class TimerComponent implements OnInit {
     @Input("start")
     start! : boolean;
 
-    constructor(private stopwatchService : StopwatchService) {}
+    constructor(private timerService : TimerService) {}
 
     ngOnInit() {
         this.timeDisplay = this.timer.value;
         this.timeValue = this.timer.value;
-        this.clock1$ = this.stopwatchService.getClock(this.timer.value.minutes,this.timer.value.seconds);
+        this.clock1$ = this.timerService.getClock(this.timer.value.minutes,this.timer.value.seconds);
         this.startClock();
     }
 
@@ -42,7 +42,7 @@ export class TimerComponent implements OnInit {
 
     updateTime(newMinutes: any, newSeconds:any){
         this.timeValue = new TimeValue(newMinutes.value, newSeconds.value);
-        this.stopwatchService.timeValues$.next(this.timeValue);
+        this.timerService.timeValues$.next(this.timeValue);
         //this.stopwatchService.timeEvents$.next(TimerEvent.NEWTIME);
     }
 }
