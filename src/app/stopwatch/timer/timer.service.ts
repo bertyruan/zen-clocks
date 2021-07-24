@@ -15,9 +15,9 @@ export class TimerService {
     public getClock(minutes: number, seconds: number) : Observable<number> {
         if(!this.clock) {
             this.clock = this.initClock(minutes, seconds);
+            this.timeEvents$.next(TimerEvent.PAUSE);
+            this.timeValues$.next(new TimeValue(minutes, seconds));
         }
-        this.timeValues$.next(new TimeValue(minutes, seconds));
-        this.timeEvents$.next(TimerEvent.PAUSE);
         return this.clock;
     }
 

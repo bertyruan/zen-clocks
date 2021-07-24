@@ -9,6 +9,7 @@ interface _TimeValue {
     seconds: number
     toSeconds : () => number
     toString : () => string
+    clone : () => _TimeValue
 }
 
 export interface Timer {
@@ -37,4 +38,21 @@ export class TimeValue implements _TimeValue  {
         let s = this.seconds < 10 ? "0" + this.seconds.toString() : this.seconds.toString();
         return `${m}:${s}`;
     }
+
+    clone() : TimeValue {
+        return new TimeValue(this.minutes, this.seconds);
+    }
+
+    subtract(value: number) {
+        let minutes = this.minutes;
+        let seconds = this.seconds;
+        if(value > this.seconds && this.minutes > 0){
+            minutes = this.minutes - 1;
+            seconds = 60 + this.seconds - value;
+        }
+        else {
+            seconds = this.seconds - value;
+        }
+        return new TimeValue(minutes, seconds);
+    } 
 }
