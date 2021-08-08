@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, interval, timer } from "rxjs";
+import { BehaviorSubject, interval, SubscribableOrPromise, Subscription, timer } from "rxjs";
 import { filter, scan, startWith } from "rxjs/operators";
 import { Timer, TimerEvent, TimeValue } from "./timer-constants";
 import { TimerService } from "./timer/timer.service";
@@ -9,6 +9,7 @@ export class TimercontrolService {
     private audioFile = "assets/audio/mbs.mp3";
     public queue : Timer[] = [];
     private activeClockIndex = -1;
+    private nextTimer! : Subscription;
 
     private startTimer = new BehaviorSubject<Timer>({} as Timer);
     public startTimer$ = this.startTimer.asObservable();
@@ -16,7 +17,14 @@ export class TimercontrolService {
 
     
     constructor(private timerService: TimerService) {
-        this.endTimer$.pipe(filter(t => t.id !== undefined)).subscribe(() => {
+        this.onEnd();
+    }
+
+    private onEnd() {
+        this.nextTimer = this.endTimer$.pipe(filter(t => t.id !== undefined)).subscribe((timer : Timer) => {
+            if(this.activeClockIndex === 0 && timer.id !== this.queue[this.activeClockIndex].id) {
+                return;
+            }
             if(this.activeClockIndex < this.queue.length-1) {
                 this.onNextAudio(); 
                 this.activeClockIndex++;
@@ -44,10 +52,11 @@ export class TimercontrolService {
     }
 
     public restart() {
-        this.activeClockIndex = -1;
-        this.endTimer$.next(this.queue[0]);
         this.timerService.timeEvents$.next(TimerEvent.RESTART);
+        this.activeClockIndex = -1;
+        this.start();
     }
+
 
     public addToQueue(timer: TimeValue) : number {
         const id = Math.floor(Math.random() * 1000) + Math.floor(Math.random() * 1000);

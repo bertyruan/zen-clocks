@@ -15,7 +15,7 @@ export class TimercontrolComponent implements OnInit {
     constructor(private timerService: TimerService, private timercontroService: TimercontrolService) {}
 
     ngOnInit(): void {
-        this.addSplit();
+        this.addSplit(4);
     }
 
     get timers() {
@@ -32,9 +32,11 @@ export class TimercontrolComponent implements OnInit {
         this.timercontroService.restart();
     }
     
-    addSplit() {
-        const newTimer = new TimeValue();
-        this.timercontroService.addToQueue(newTimer);
+    addSplit(n = 1) {
+        for(let i = 0; i < n; i++) {
+            const newTimer = new TimeValue();
+            this.timercontroService.addToQueue(newTimer);
+        }
     }
     
     removeSplit(id: number) {

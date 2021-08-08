@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { Observable, Subscription } from "rxjs";
-import { filter } from "rxjs/operators";
+import { NEVER, Observable, Subscription } from "rxjs";
+import { filter, tap } from "rxjs/operators";
 import { Timer, TimerEvent, TimeValue } from "../timer-constants";
 import { TimercontrolService } from "../timercontrol.service";
 import { TimerService } from "./timer.service";
@@ -12,6 +12,8 @@ import { TimerService } from "./timer.service";
 export class TimerComponent implements OnInit {
     timeInputValue!: TimeValue;
     timeDisplay!: TimeValue;
+    controller : Subscription = NEVER.subscribe();
+    clock : Subscription = NEVER.subscribe();
 
     @Input()
     timer!: Timer;
@@ -19,18 +21,33 @@ export class TimerComponent implements OnInit {
     constructor(private timerService : TimerService, private timercontrol : TimercontrolService) {}
 
     ngOnInit() {
-        this.timeDisplay = this.timer.value;
+        this.initTimer();
+        this.setupRestart();
+    }
+
+    initTimer() {
+        this.timeDisplay = this.timer.value.clone();
         this.timeInputValue = this.timer.value.clone();
-        this.timercontrol.startTimer$.pipe(filter(t => t?.id === this.timer.id)).subscribe(
+        this.controller = this.timercontrol.startTimer$.pipe(
+            filter(t => t?.id === this.timer.id),
+            tap(t => console.log(t.id, t?.id === this.timer.id)),
+        ).subscribe(
            () => this.startClock()
-        )
+        );
     }
 
     startClock() {
-        this.timerService.getClock(this.timer.value.minutes,this.timer.value.seconds).subscribe({next: (timeLeft) => {
+        this.clock = this.timerService.getClock(this.timer.value.minutes,this.timer.value.seconds).subscribe({next: (timeLeft) => {
             this.timeDisplay.minutes = Math.floor(timeLeft / 60); 
             this.timeDisplay.seconds = timeLeft - (this.timeDisplay.minutes * 60);
         }, complete: () => this.timercontrol.endTimer$.next(this.timer)});
+    }
+
+    setupRestart() {
+        this.timerService.timeEvents$.pipe(filter(e=>e===TimerEvent.RESTART)).subscribe(_ => {
+            this.clock.unsubscribe();
+            this.timeDisplay = this.timer.value.clone();
+        });
     }
 
     get displayTime() : string {
