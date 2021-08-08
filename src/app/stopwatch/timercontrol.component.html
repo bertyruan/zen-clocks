@@ -1,15 +1,18 @@
 <div>
+    <button (click)="addSplit()">Add Split</button>
     <div>
         <ng-container *ngFor="let timer of timers">
             <app-timer [timer]="timer"></app-timer>
             <button (click)="removeSplit(timer.id)">Remove</button>
         </ng-container>
-        <button (click)="addSplit()">Add Split</button>
     </div>
     
     <div>
         <button (click)="onStart()">Start</button>
         <button (click)="onPause()">Pause</button>
         <button (click)="onRestart()">Restart</button>
+    </div>
+    <div>
+        <button (click)="onSave()">Save</button>
     </div>
 </div>

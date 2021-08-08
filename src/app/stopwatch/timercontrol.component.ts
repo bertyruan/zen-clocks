@@ -2,6 +2,7 @@ import { Time } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { BehaviorSubject, combineLatest, interval, NEVER, noop, Observable, of, Subscription } from "rxjs";
 import { first, map, mapTo, scan, startWith, switchMap, switchMapTo, takeWhile, tap } from "rxjs/operators"
+import { StopwatchService } from "../shared/stopwatch.service";
 import { TimerEvent, Timer, TimeValue } from "./timer-constants";
 import { TimerService } from "./timer/timer.service";
 import { TimercontrolService } from "./timercontrol.service";
@@ -12,10 +13,19 @@ import { TimercontrolService } from "./timercontrol.service";
     styleUrls: ['./timercontrol.component.css']
 })
 export class TimercontrolComponent implements OnInit {
-    constructor(private timerService: TimerService, private timercontroService: TimercontrolService) {}
+    n = 3;
+
+    constructor(private timerService: TimerService, private timercontroService: TimercontrolService, private stopwatchService : StopwatchService) {}
 
     ngOnInit(): void {
-        this.addSplit(4);
+        const savedTimers = this.stopwatchService.getTimers();
+        if(savedTimers.length) {
+            savedTimers.forEach(v => this.addSplit(v.minutes, v.seconds));
+            return;
+        }
+        for(let i = 0; i < this.n; i++) {
+            this.addSplit();
+        }
     }
 
     get timers() {
@@ -31,12 +41,12 @@ export class TimercontrolComponent implements OnInit {
     onRestart() {
         this.timercontroService.restart();
     }
-    
-    addSplit(n = 1) {
-        for(let i = 0; i < n; i++) {
-            const newTimer = new TimeValue();
-            this.timercontroService.addToQueue(newTimer);
-        }
+    onSave() {
+        this.stopwatchService.saveTimers(this.timercontroService.queue.map(v => v.value));
+    }
+    addSplit(m=0, s=2) {
+        const newTimer = new TimeValue(m,s);
+        this.timercontroService.addToQueue(newTimer);
     }
     
     removeSplit(id: number) {

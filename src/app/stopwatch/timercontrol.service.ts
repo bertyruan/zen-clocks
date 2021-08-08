@@ -56,10 +56,9 @@ export class TimercontrolService {
         this.activeClockIndex = -1;
         this.start();
     }
-
-
+    
     public addToQueue(timer: TimeValue) : number {
-        const id = Math.floor(Math.random() * 1000) + Math.floor(Math.random() * 1000);
+        const id = Math.floor(Math.random() * 1000) + Math.floor(Math.random() * 1000) * Math.floor(Math.random() * 1000);
         //const order = this.queue.length ? this.queue[this.queue.length - 1].order + 1 : 1;
         this.queue.push({id: id, order: 0, value: timer});
         return id;
