@@ -21,7 +21,7 @@ export class TimerComponent implements OnInit {
     ngOnInit() {
         this.timeDisplay = this.timer.value;
         this.timeInputValue = this.timer.value.clone();
-        this.timercontrol.startTimer$.pipe(filter(t => t && t.id === this.timer.id)).subscribe(
+        this.timercontrol.startTimer$.pipe(filter(t => t?.id === this.timer.id)).subscribe(
            () => this.startClock()
         )
     }

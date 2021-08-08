@@ -23,7 +23,7 @@ export class TimeValue implements _TimeValue  {
     seconds: number;
     isValid = false;
 
-    constructor(minutes = 1, seconds = 0) {
+    constructor(minutes = 0, seconds = 2) {
         this.minutes = +minutes;
         this.seconds = +seconds;
         this.isValid = true;

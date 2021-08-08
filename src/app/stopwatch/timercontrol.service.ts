@@ -1,11 +1,12 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
-import { filter } from "rxjs/operators";
+import { BehaviorSubject, interval, timer } from "rxjs";
+import { filter, scan, startWith } from "rxjs/operators";
 import { Timer, TimerEvent, TimeValue } from "./timer-constants";
 import { TimerService } from "./timer/timer.service";
 
 @Injectable({providedIn: 'root'})
 export class TimercontrolService {
+    private audioFile = "assets/audio/mbs.mp3";
     public queue : Timer[] = [];
     private activeClockIndex = -1;
 
@@ -15,15 +16,17 @@ export class TimercontrolService {
 
     
     constructor(private timerService: TimerService) {
-        this.endTimer$.pipe(filter(t => t.id !== undefined)).subscribe(endTimer => {
-            let index = this.queue.findIndex(timer => timer.id === endTimer.id);
-            if(this.activeClockIndex <= this.queue.length - 1) {
+        this.endTimer$.pipe(filter(t => t.id !== undefined)).subscribe(() => {
+            if(this.activeClockIndex < this.queue.length-1) {
+                this.onNextAudio(); 
                 this.activeClockIndex++;
                 const nextClock = this.queue[this.activeClockIndex].value.subtract(1);
                 this.timerService.timeValues$.next(nextClock);
                 this.timerService.timeEvents$.next(TimerEvent.NEWTIME);
                 this.startTimer.next(this.queue[this.activeClockIndex]);
-            };
+            } else {
+                this.onNextAudio(true);
+            }
         });
     }
 
@@ -41,6 +44,8 @@ export class TimercontrolService {
     }
 
     public restart() {
+        this.activeClockIndex = -1;
+        this.endTimer$.next(this.queue[0]);
         this.timerService.timeEvents$.next(TimerEvent.RESTART);
     }
 
@@ -90,4 +95,38 @@ export class TimercontrolService {
         }
         return false;
     }
+
+    onNextAudio = (() => {
+        const audio = new Audio(this.audioFile);
+        function play(a : HTMLAudioElement) {
+            a.currentTime = audio.currentTime = 0;
+            a.play();
+        }
+        return (isEnd = false) => {
+            if(isEnd) {
+                const audio2 = new Audio(this.audioFile);
+                play(audio);
+                interval(1000).pipe(scan((itr: number)=> {return itr+1},-1)).subscribe(itr => {
+                    switch (itr) {
+                        case 3:
+                            audio.pause();
+                                break;
+                        case 2:
+                            play(audio2);
+                            break;
+                        case 6:
+                            audio2.pause();
+                            break;
+                        case 5:
+                            play(audio);
+                            break;    
+                        default:
+                            break;
+                    }
+                });
+            } else {
+                play(audio);
+            }
+        }
+    })();
 }

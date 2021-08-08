@@ -23,12 +23,10 @@ export class TimerService {
 
     private initClock(minutes: number, seconds: number) : Observable<number> {
         return combineLatest([this.timeEvents$, this.timeValues$]).pipe(
-            tap(arr => console.log(arr[0], arr[1].isValid)),
             filter(arr => arr[1].isValid),
             map(arr => {
                 return [arr[0], arr[1].toSeconds()] 
             }),
-            tap(console.log),
             switchMap(arr => {
                 let t = arr[0];
                 if(t === TimerEvent.PAUSE) return NEVER;
@@ -39,8 +37,6 @@ export class TimerService {
                 if(arr[0] === TimerEvent.RESTART) return arr[1];
                 return timeLeft - 1;
             }, +minutes * 60 + +seconds),
-         
-            tap(timeLeft => { if(timeLeft === 0) console.log("FINISHED")}),
             takeWhile((timeLeft) => timeLeft >= 0)
         )
     }
