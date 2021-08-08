@@ -18,7 +18,7 @@ export class TimercontrolComponent implements OnInit {
     constructor(private timerService: TimerService, private timercontroService: TimercontrolService, private stopwatchService : StopwatchService) {}
 
     ngOnInit(): void {
-        const savedTimers = this.stopwatchService.getTimers();
+        const savedTimers = this.stopwatchService.getDefaultTimer();
         if(savedTimers.length) {
             savedTimers.forEach(v => this.addSplit(v.minutes, v.seconds));
             return;
@@ -41,8 +41,8 @@ export class TimercontrolComponent implements OnInit {
     onRestart() {
         this.timercontroService.restart();
     }
-    onSave() {
-        this.stopwatchService.saveTimers(this.timercontroService.queue.map(v => v.value));
+    onSave(timerName : any) {
+        this.stopwatchService.saveTimers(timerName.value, this.timercontroService.queue.map(v => v.value));
     }
     addSplit(m=0, s=2) {
         const newTimer = new TimeValue(m,s);

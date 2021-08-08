@@ -1,3 +1,13 @@
-HELLO
+<div fxLayout="row" fxLayoutGap="30px">
+    <app-timercontrol fxFlex></app-timercontrol>
+    <div>
+        <ng-container *ngFor="let routine of routines">
+            {{routine.name}}
+            <div *ngFor="let timer of routine.timers">
+                {{timer.toString()}}
+            </div>
+        </ng-container>
+        Stuff
+    </div>
+</div>
 
-<app-timercontrol></app-timercontrol>

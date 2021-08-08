@@ -18,6 +18,11 @@ export interface Timer {
     order: number
 }
 
+export interface Routine {
+    name: string,
+    timers: TimeValue[];
+}
+
 export class TimeValue implements _TimeValue  {
     minutes: number;
     seconds: number;

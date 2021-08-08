@@ -13,6 +13,7 @@
         <button (click)="onRestart()">Restart</button>
     </div>
     <div>
-        <button (click)="onSave()">Save</button>
+        <input #timerName value="timer name">
+        <button (click)="onSave(timerName)">Save</button>
     </div>
 </div>
