@@ -15,7 +15,7 @@ interface _TimeValue {
 export interface Timer {
     id: number,
     value: TimeValue,
-    order: number
+    isLast: boolean
 }
 
 export interface Routine {

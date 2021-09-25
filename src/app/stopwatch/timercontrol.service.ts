@@ -6,7 +6,6 @@ import { TimerService } from "./timer/timer.service";
 
 @Injectable({providedIn: 'root'})
 export class TimercontrolService {
-    private audioFile = "assets/audio/mbs.mp3";
     public queue : Timer[] = [];
     private activeClockIndex = -1;
     private nextTimer! : Subscription;
@@ -26,19 +25,22 @@ export class TimercontrolService {
                 return;
             }
             if(this.activeClockIndex < this.queue.length-1) {
-                this.onNextAudio(); 
                 this.activeClockIndex++;
                 const nextClock = this.queue[this.activeClockIndex].value.subtract(1);
                 this.timerService.timeValues$.next(nextClock);
                 this.timerService.timeEvents$.next(TimerEvent.NEWTIME);
                 this.startTimer.next(this.queue[this.activeClockIndex]);
             } else {
-                this.onNextAudio(true);
+                this.activeClockIndex++;
             }
         });
     }
 
     public start() {
+        if(this.activeClockIndex === this.queue.length) {
+            this.restart();
+            return;
+        }
         if(this.activeClockIndex < 0 && this.queue.length) {
             this.activeClockIndex++;
             this.startTimer.next(this.queue[this.activeClockIndex]);
@@ -60,7 +62,11 @@ export class TimercontrolService {
     public addToQueue(timer: TimeValue) : number {
         const id = Math.floor(Math.random() * 1000) + Math.floor(Math.random() * 1000) * Math.floor(Math.random() * 1000);
         //const order = this.queue.length ? this.queue[this.queue.length - 1].order + 1 : 1;
-        this.queue.push({id: id, order: 0, value: timer});
+        if(this.queue.length > 0 ) { 
+            this.queue[this.queue.length - 1].isLast = false; 
+        }
+        this.queue.push({id: id, isLast: true, value: timer});
+        console.log(this.queue);
         return id;
     }
 
@@ -76,6 +82,7 @@ export class TimercontrolService {
                 this.timerService.timeValues$.next(nextTimer.value);
                 this.timerService.timeEvents$.next(TimerEvent.START);
             }
+            this.queue[this.queue.length-1].isLast = true;
             return removedTimer;
         }
         return null;
@@ -92,49 +99,15 @@ export class TimercontrolService {
         this.queue[timerIndex].value.seconds = timeValue.seconds;
     }
 
-    public reorder(id: number, order: number) : boolean {
-        if(0 > order || order >= this.queue.length) {
-            return false;
-        }
-        const timer = this.removeFromQueue(id);
-        if(timer) {
-            this.queue.splice(order - 1, 0, timer);
-            return true;
-        }
-        return false;
-    }
-
-    onNextAudio = (() => {
-        const audio = new Audio(this.audioFile);
-        function play(a : HTMLAudioElement) {
-            a.currentTime = audio.currentTime = 0;
-            a.play();
-        }
-        return (isEnd = false) => {
-            if(isEnd) {
-                const audio2 = new Audio(this.audioFile);
-                play(audio);
-                interval(1000).pipe(scan((itr: number)=> {return itr+1},-1)).subscribe(itr => {
-                    switch (itr) {
-                        case 3:
-                            audio.pause();
-                                break;
-                        case 2:
-                            play(audio2);
-                            break;
-                        case 6:
-                            audio2.pause();
-                            break;
-                        case 5:
-                            play(audio);
-                            break;    
-                        default:
-                            break;
-                    }
-                });
-            } else {
-                play(audio);
-            }
-        }
-    })();
+    // public reorder(id: number, order: number) : boolean {
+    //     if(0 > order || order >= this.queue.length) {
+    //         return false;
+    //     }
+    //     const timer = this.removeFromQueue(id);
+    //     if(timer) {
+    //         this.queue.splice(order - 1, 0, timer);
+    //         return true;
+    //     }
+    //     return false;
+    // }
 }
