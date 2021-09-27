@@ -1,4 +1,5 @@
 <div>
+    <div>timer name: {{timerName}}</div>
     <button (click)="addSplit()">Add Split</button>
     <div>
         <ng-container *ngFor="let timer of timers">
@@ -6,14 +7,14 @@
             <button (click)="removeSplit(timer.id)">Remove</button>
         </ng-container>
     </div>
-    
     <div>
         <button (click)="onStart()">Start</button>
         <button (click)="onPause()">Pause</button>
         <button (click)="onRestart()">Restart</button>
     </div>
     <div>
-        <input #timerName value="timer name">
-        <button (click)="onSave(timerName)">Save</button>
+        <input #newTimerName value="timer name">
+        <button (click)="onSave(newTimerName)">Save</button>
+        <div>{{saveMessage}}</div>
     </div>
 </div>

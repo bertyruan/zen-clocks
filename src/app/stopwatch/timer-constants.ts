@@ -18,7 +18,13 @@ export interface Timer {
     isLast: boolean
 }
 
-export interface Routine {
+export interface Timerbank {
+    default?: TimerSet,
+    current: TimerSet,
+    sets: TimerSet[]
+}
+
+export interface TimerSet {
     name: string,
     timers: TimeValue[];
 }
@@ -39,8 +45,12 @@ export class TimeValue implements _TimeValue  {
     }
 
     toString() : string {
-        let m = this.minutes < 10 ? "0" + this.minutes.toString() : this.minutes.toString();
-        let s = this.seconds < 10 ? "0" + this.seconds.toString() : this.seconds.toString();
+        return TimeValue.toString(this.minutes, this.seconds);
+    }
+
+    static toString(minutes: number, seconds: number) : string {
+        let m = minutes < 10 ? "0" + minutes.toString() : minutes.toString();
+        let s = seconds < 10 ? "0" + seconds.toString() : seconds.toString();
         return `${m}:${s}`;
     }
 

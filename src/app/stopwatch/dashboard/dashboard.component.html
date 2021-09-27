@@ -1,11 +1,14 @@
 <div fxLayout="row" fxLayoutGap="30px">
     <app-timercontrol fxFlex></app-timercontrol>
     <div>
-        <ng-container *ngFor="let routine of routines">
-            {{routine.name}}
-            <div *ngFor="let timer of routine.timers">
-                {{timer.toString()}}
-            </div>
+        <ng-container *ngFor="let set of sets">
+            <button (click)="selectTimer(set.name)">
+                {{set.name}}
+                <div *ngFor="let timer of set.timers">
+                    {{ timeToString(timer) }}
+                </div>
+                Default: <input type="radio" name="defaultSet" [value]="set.name" />
+            </button>
         </ng-container>
     </div>
 </div>

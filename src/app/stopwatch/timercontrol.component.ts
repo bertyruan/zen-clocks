@@ -2,7 +2,7 @@ import { Time } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { BehaviorSubject, combineLatest, interval, NEVER, noop, Observable, of, Subscription } from "rxjs";
 import { first, map, mapTo, scan, startWith, switchMap, switchMapTo, takeWhile, tap } from "rxjs/operators"
-import { StopwatchService } from "../shared/stopwatch.service";
+import { TimerbankService } from "./timerbank/timerbank.service";
 import { TimerEvent, Timer, TimeValue } from "./timer-constants";
 import { TimerService } from "./timer/timer.service";
 import { TimercontrolService } from "./timercontrol.service";
@@ -13,19 +13,23 @@ import { TimercontrolService } from "./timercontrol.service";
     styleUrls: ['./timercontrol.component.css']
 })
 export class TimercontrolComponent implements OnInit {
-    n = 3;
+    timerName = "";
+    saveMessage = "";
 
-    constructor(private timerService: TimerService, private timercontroService: TimercontrolService, private stopwatchService : StopwatchService) {}
+    constructor(private timerService: TimerService, 
+        private timercontroService: TimercontrolService, 
+        private timerbankService : TimerbankService
+    ) {}
 
     ngOnInit(): void {
-        const savedTimers = this.stopwatchService.getDefaultTimer();
-        if(savedTimers.length) {
-            savedTimers.forEach(v => this.addSplit(v.minutes, v.seconds));
-            return;
-        }
-        for(let i = 0; i < this.n; i++) {
-            this.addSplit();
-        }
+        this.timerbankService.timerBank$.subscribe(bank => {
+            let set = bank.default ? bank.default : bank.current;
+            if(this.timerName !== set.name) {
+                this.timerName = set.name;
+                this.clearSplits();
+                set.timers.forEach(timer => this.addSplit(timer.minutes, timer.seconds));
+            }  
+        });
     }
 
     get timers() {
@@ -42,15 +46,24 @@ export class TimercontrolComponent implements OnInit {
         this.timercontroService.restart();
     }
     onSave(timerName : any) {
-        this.stopwatchService.saveTimers(timerName.value, this.timercontroService.queue.map(v => v.value));
+        const newSet = {name: timerName.value, timers: this.timercontroService.queue.map(v => v.value)};
+        if(this.timerbankService.saveSet(newSet)) {
+            this.saveMessage = "Success!";
+        } else {
+            this.saveMessage = "Choose a different name!";
+        }
     }
-    addSplit(m=0, s=2) {
-        const newTimer = new TimeValue(m,s);
+    addSplit(minutes = 1, seconds = 0) {
+        const newTimer = new TimeValue(minutes,seconds);
         this.timercontroService.addToQueue(newTimer);
     }
     
     removeSplit(id: number) {
         this.timercontroService.removeFromQueue(id);
+    }
+
+    private clearSplits() {
+        this.timercontroService.removeAllFromQueue();
     }
 
 }

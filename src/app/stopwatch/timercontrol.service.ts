@@ -66,7 +66,6 @@ export class TimercontrolService {
             this.queue[this.queue.length - 1].isLast = false; 
         }
         this.queue.push({id: id, isLast: true, value: timer});
-        console.log(this.queue);
         return id;
     }
 
@@ -86,6 +85,10 @@ export class TimercontrolService {
             return removedTimer;
         }
         return null;
+    }
+
+    public removeAllFromQueue() : void {
+        this.queue = [];
     }
 
     public updateTime(id: number, timeValue: TimeValue) {

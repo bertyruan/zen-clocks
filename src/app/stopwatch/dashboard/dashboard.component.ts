@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { StopwatchService } from "src/app/shared/stopwatch.service";
-import { Routine } from "../timer-constants";
+import { TimerbankService } from "src/app/stopwatch/timerbank/timerbank.service";
+import { TimeValue, TimerSet } from "../timer-constants";
+import { DashboardService } from "./dashboard.service";
 
 @Component({
     templateUrl: "./dashboard.component.html",
@@ -8,14 +9,21 @@ import { Routine } from "../timer-constants";
     selector: "app-sw-dashboard"
 })
 export class DashboardComponent implements OnInit {
-    constructor(private stopwatchService : StopwatchService) {}
-    ngOnInit() {}
+    sets : TimerSet[] = [];
 
-    get routines() {
-        let t : Routine[] = [];
-        this.stopwatchService.timers.forEach((value, key) => {
-            t.push({name: key, timers: value});
-        })
-        return t;
+    constructor(private timerbankService : TimerbankService, private dashboardService: DashboardService) {}
+
+    ngOnInit() {
+        this.timerbankService.timerBank$.subscribe(bank => {
+            this.sets = bank.sets;
+        });
+    }
+
+    selectTimer(name: string) : void {
+        // this.dashboardService.currentSet$.next();
+    }
+
+    timeToString(timeValue: TimeValue) : string {
+        return TimeValue.toString(timeValue.minutes, timeValue.seconds);
     }
 }
