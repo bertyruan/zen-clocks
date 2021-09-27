@@ -1,5 +1,5 @@
 <div>
-    <div>timer name: {{timerName}}</div>
+    <div>timer name: {{timerName}} <button (click)="updateSet()">Update</button></div> 
     <button (click)="addSplit()">Add Split</button>
     <div>
         <ng-container *ngFor="let timer of timers">

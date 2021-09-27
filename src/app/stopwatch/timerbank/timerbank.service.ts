@@ -60,6 +60,12 @@ export class TimerbankService {
         return true;
     }
 
+    public updateSet(set: TimerSet) {
+        let sets = this.timerBank$.value.sets;
+        sets[this.getSetIndex(set.name)] = set;
+        this.timerBank$.next({current: this.timerBank$.value.current, sets: sets})
+    }
+
     private getSetIndex(name: string) : number {
         return this.timerBank$.value.sets.findIndex(set => set.name === name);
     }

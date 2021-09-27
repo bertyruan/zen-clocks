@@ -63,6 +63,11 @@ export class TimercontrolComponent implements OnInit {
         this.timercontroService.removeFromQueue(id);
     }
 
+    updateSet() : void {
+        let timeValues = this.timercontroService.queue.map(timer => timer.value);
+        this.timerbankService.updateSet({name: this.timerName, timers: timeValues});
+    }    
+
     private clearSplits() {
         this.timercontroService.removeAllFromQueue();
     }
