@@ -31,13 +31,6 @@ export class TimercontrolComponent implements OnInit {
                 set.timers.forEach(timer => this.addSplit(timer.minutes, timer.seconds));
             }
         });
-        // this.timerbankService.timerBank$.subscribe(bank => {
-        //     if(this.timerName !== bank.current.name) {
-        //         this.timerName = bank.current.name;
-        //         this.clearSplits();
-        //         bank.current.timers.forEach(timer => this.addSplit(timer.minutes, timer.seconds));
-        //     }  
-        // });
     }
 
     get timers() {

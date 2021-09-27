@@ -2,6 +2,7 @@ import { Time } from "@angular/common";
 import { Injectable, OnInit } from "@angular/core";
 import { CookieService } from "ngx-cookie-service";
 import { BehaviorSubject, Observable } from "rxjs";
+import { DashboardService } from "../dashboard/dashboard.service";
 import { Timerbank, TimerSet, TimeValue } from "../timer-constants";
 
 @Injectable({providedIn: 'root'})
@@ -12,7 +13,7 @@ export class TimerbankService {
  
     public timerBank$ = new BehaviorSubject<Timerbank>({current: this.defaultSet, sets: []});
 
-    constructor(private cookieService: CookieService) {
+    constructor(private cookieService: CookieService, private dashboardService: DashboardService) {
         this.loadTimerSets();
         this.configurePostTimerSets();
     }
@@ -22,10 +23,15 @@ export class TimerbankService {
         let bank = cookie ? JSON.parse(cookie) as Timerbank : this.timerBank$.value;
 
         this.timerBank$.next(bank);
+        this.dashboardService.currentSet$.next(bank.current);
     }
 
     private configurePostTimerSets() {
         this.timerBank$.subscribe(bank => {
+            this.cookieService.set(this.TIMERSETS, JSON.stringify(bank), 1000);
+        });
+        this.dashboardService.currentSet$.subscribe(set => {
+            let bank : Timerbank = {current: set, sets: this.timerBank$.value.sets};
             this.cookieService.set(this.TIMERSETS, JSON.stringify(bank), 1000);
         })
     }
