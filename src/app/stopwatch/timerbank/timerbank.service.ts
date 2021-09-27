@@ -7,6 +7,7 @@ import { Timerbank, TimerSet, TimeValue } from "../timer-constants";
 @Injectable({providedIn: 'root'})
 export class TimerbankService {
     private TIMERSETS = "TIMERSETS";
+
     private defaultSet = {name: "default", timers: [new TimeValue(1,0)]};
  
     public timerBank$ = new BehaviorSubject<Timerbank>({current: this.defaultSet, sets: []});
@@ -19,15 +20,7 @@ export class TimerbankService {
     private loadTimerSets() : void {
         let cookie = this.cookieService.get(this.TIMERSETS);
         let bank = cookie ? JSON.parse(cookie) as Timerbank : this.timerBank$.value;
-        // if(cookie) {
-        //     for(let i = 0; i < bank.sets.length; i++) {
-        //         for(let j = 0; j < bank.sets[i].timers.length; j++) {
-        //             bank.sets[i].timers[j] = bank.sets[i].timers[j] as TimeValue;
-        //         }
-        //     }
-        //     bank.default?.timers.map(timer => timer as TimeValue);
-        //     bank.current.timers = bank.current.timers.map(timer => timer as TimeValue);
-        // }
+
         this.timerBank$.next(bank);
     }
 
@@ -36,14 +29,18 @@ export class TimerbankService {
             this.cookieService.set(this.TIMERSETS, JSON.stringify(bank), 1000);
         })
     }
-    
-    public setDefault(name: string) {
-        const timersetIndex = this.getSetIndex(name);
-        if(timersetIndex >= 0) {
-            let newDefault = this.timerBank$.value.sets[timersetIndex];
-            this.timerBank$.next({current: this.timerBank$.value.current, default: newDefault, sets: this.timerBank$.value.sets});
-        }
+
+    public getCurrent() : TimerSet {
+        return this.timerBank$.value.current;
     }
+    
+    // public setDefault(name: string) {
+    //     const timersetIndex = this.getSetIndex(name);
+    //     if(timersetIndex >= 0) {
+    //         let newDefault = this.timerBank$.value.sets[timersetIndex];
+    //         this.timerBank$.next({current: this.timerBank$.value.current, sets: this.timerBank$.value.sets});
+    //     }
+    // }
 
     public saveSet(set: TimerSet) : boolean {
         if(!set.name || this.getSetIndex(set.name) >= 0) return false;

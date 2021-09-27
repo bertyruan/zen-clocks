@@ -19,8 +19,8 @@ export class DashboardComponent implements OnInit {
         });
     }
 
-    selectTimer(name: string) : void {
-        // this.dashboardService.currentSet$.next();
+    selectTimer(set: TimerSet) : void {
+        this.dashboardService.currentSet$.next(set);
     }
 
     timeToString(timeValue: TimeValue) : string {

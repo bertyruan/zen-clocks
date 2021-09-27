@@ -6,6 +6,7 @@ import { TimerbankService } from "./timerbank/timerbank.service";
 import { TimerEvent, Timer, TimeValue } from "./timer-constants";
 import { TimerService } from "./timer/timer.service";
 import { TimercontrolService } from "./timercontrol.service";
+import { DashboardService } from "./dashboard/dashboard.service";
 
 @Component({
     selector: 'app-timercontrol',
@@ -18,18 +19,25 @@ export class TimercontrolComponent implements OnInit {
 
     constructor(private timerService: TimerService, 
         private timercontroService: TimercontrolService, 
-        private timerbankService : TimerbankService
+        private timerbankService : TimerbankService,
+        private dashboardService: DashboardService
     ) {}
 
     ngOnInit(): void {
-        this.timerbankService.timerBank$.subscribe(bank => {
-            let set = bank.default ? bank.default : bank.current;
+        this.dashboardService.currentSet$.subscribe(set => {
             if(this.timerName !== set.name) {
                 this.timerName = set.name;
                 this.clearSplits();
                 set.timers.forEach(timer => this.addSplit(timer.minutes, timer.seconds));
-            }  
+            }
         });
+        // this.timerbankService.timerBank$.subscribe(bank => {
+        //     if(this.timerName !== bank.current.name) {
+        //         this.timerName = bank.current.name;
+        //         this.clearSplits();
+        //         bank.current.timers.forEach(timer => this.addSplit(timer.minutes, timer.seconds));
+        //     }  
+        // });
     }
 
     get timers() {

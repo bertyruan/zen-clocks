@@ -2,12 +2,11 @@
     <app-timercontrol fxFlex></app-timercontrol>
     <div>
         <ng-container *ngFor="let set of sets">
-            <button (click)="selectTimer(set.name)">
+            <button (click)="selectTimer(set)">
                 {{set.name}}
                 <div *ngFor="let timer of set.timers">
                     {{ timeToString(timer) }}
                 </div>
-                Default: <input type="radio" name="defaultSet" [value]="set.name" />
             </button>
         </ng-container>
     </div>

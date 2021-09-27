@@ -19,7 +19,6 @@ export interface Timer {
 }
 
 export interface Timerbank {
-    default?: TimerSet,
     current: TimerSet,
     sets: TimerSet[]
 }
