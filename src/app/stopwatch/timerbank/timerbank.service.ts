@@ -40,13 +40,18 @@ export class TimerbankService {
         return this.timerBank$.value.current;
     }
     
-    // public setDefault(name: string) {
-    //     const timersetIndex = this.getSetIndex(name);
-    //     if(timersetIndex >= 0) {
-    //         let newDefault = this.timerBank$.value.sets[timersetIndex];
-    //         this.timerBank$.next({current: this.timerBank$.value.current, sets: this.timerBank$.value.sets});
-    //     }
-    // }
+    public deleteSet(name: string) : boolean {
+        const index = this.getSetIndex(name);
+        if(index >= 0 && this.timerBank$.value.sets.length > 1) {
+            this.timerBank$.value.sets.splice(this.getSetIndex(name), 1);
+            if(this.dashboardService.currentSet$.value.name === name) {
+                this.dashboardService.currentSet$.next(this.timerBank$.value.sets[0]);
+            }
+            
+            return true;
+        }
+        return false;
+    }
 
     public saveSet(set: TimerSet) : boolean {
         if(!set.name || this.getSetIndex(set.name) >= 0) return false;

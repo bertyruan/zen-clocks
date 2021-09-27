@@ -10,6 +10,7 @@ import { DashboardService } from "./dashboard.service";
 })
 export class DashboardComponent implements OnInit {
     sets : TimerSet[] = [];
+    deleteMessage = "";
 
     constructor(private timerbankService : TimerbankService, private dashboardService: DashboardService) {}
 
@@ -19,8 +20,17 @@ export class DashboardComponent implements OnInit {
         });
     }
 
-    selectTimer(set: TimerSet) : void {
+    selectSet(set: TimerSet) : void {
         this.dashboardService.currentSet$.next(set);
+    }
+
+    deleteSet(name: string) : void {
+        if(this.timerbankService.deleteSet(name)) {
+            this.deleteMessage = "deleted " + name;
+        } 
+        else {
+            this.deleteMessage = "sorry can't delete"
+        } 
     }
 
     timeToString(timeValue: TimeValue) : string {
