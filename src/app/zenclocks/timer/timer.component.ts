@@ -6,7 +6,7 @@ import { TimercontrolService } from "../timercontrol/timercontrol.service";
 import { TimerService } from "./timer.service";
 
 @Component({
-    selector: 'app-timer',
+    selector: 'app-zc-timer',
     templateUrl: './timer.component.html'
 })
 export class TimerComponent implements OnInit {

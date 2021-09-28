@@ -5,7 +5,7 @@ import { TimeValue, TimerSet } from "../timer-constants";
 @Component({
     templateUrl: "./menu.component.html",
     styleUrls: ["./menu.component.css"],
-    selector: "app-menu"
+    selector: "app-zc-menu"
 })
 export class MenuComponent implements OnInit {
     sets : TimerSet[] = [];

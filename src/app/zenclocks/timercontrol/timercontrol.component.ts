@@ -8,7 +8,7 @@ import { TimerService } from "../timer/timer.service";
 import { TimercontrolService } from "./timercontrol.service";
 
 @Component({
-    selector: 'app-timercontrol',
+    selector: 'app-zc-timercontrol',
     templateUrl: './timercontrol.component.html',
     styleUrls: ['./timercontrol.component.css']
 })

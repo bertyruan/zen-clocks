@@ -1,5 +1,14 @@
-<div fxLayout="row" fxLayoutGap="30px">
-    <div>About Section</div>
-    <app-timercontrol fxFlex></app-timercontrol>
-    <app-menu fxFlex></app-menu>
+<div class="container">
+    <div id="menu">
+        <div id="menu-container">
+            <button class="menu-button">Save</button>
+            <button class="menu-button">Open</button>
+        </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="30px">
+        <app-zc-about fxFlex="20">
+        </app-zc-about>
+        <app-zc-timercontrol fxFlex="60"></app-zc-timercontrol>
+        <app-zc-menu fxFlex="20"></app-zc-menu>
+    </div>
 </div>

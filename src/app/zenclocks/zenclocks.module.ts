@@ -5,13 +5,15 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TimerComponent } from './timer/timer.component';
 import { MenuComponent } from './menu/menu.component';
 import { ZenclocksComponent } from './zenclocks.component';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
     MenuComponent,
     TimercontrolComponent,
     TimerComponent,
-    ZenclocksComponent
+    ZenclocksComponent,
+    AboutComponent
   ],
   imports: [
     CommonModule,
