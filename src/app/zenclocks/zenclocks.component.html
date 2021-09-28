@@ -2,12 +2,17 @@
     <div id="menu">
         <div id="menu-container">
             <button class="menu-button">Save</button>
+            <button class="menu-button">Save as</button>
             <button class="menu-button">Open</button>
         </div>
     </div>
-    <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="30px">
+    <div>
+        <h1>Zen Clocks</h1>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center">
+        <div fxFlex="5"></div>
         <app-zc-about fxFlex="20"></app-zc-about>
-        <app-zc-timercontrol fxFlex="60"></app-zc-timercontrol>
+        <app-zc-timercontrol fxFlex="55" fxFlexOffset="40px"></app-zc-timercontrol>
         <app-zc-menu fxFlex="20"></app-zc-menu>
     </div>
 </div>

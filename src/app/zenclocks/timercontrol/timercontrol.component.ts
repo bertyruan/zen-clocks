@@ -10,7 +10,7 @@ import { TimercontrolService } from "./timercontrol.service";
 @Component({
     selector: 'app-zc-timercontrol',
     templateUrl: './timercontrol.component.html',
-    styleUrls: ['./timercontrol.component.css']
+    styleUrls: ['./timercontrol.component.scss']
 })
 export class TimercontrolComponent implements OnInit {
     timerName = "";

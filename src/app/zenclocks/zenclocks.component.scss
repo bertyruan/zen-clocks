@@ -1,40 +1,50 @@
 @import './shared/styles.scss';
 
+$button-border-color: #6C757D;
+
 .container {
     background-color: $base-background-color;
     color: $base-font-color;
     font-family: $base-font-family;
-}
 
-#menu {
-    height: 50px;
+    h1 {
+        text-align: center;
+    }
 
-    #menu-container {
-        display: flex;
-        justify-content: space-evenly;
-        float: right;
-        margin-right: 50px;
-        width: 300px;
-        
-        .menu-button {  
-            background-color: $base-background-color;
-            color: $base-font-color;
-            font-size: 24px;
-            text-decoration: underline;
-            text-underline-offset: 3px;
-            border: solid $base-background-color;
-        }
-
-        .menu-button:hover {
-            background-color: #DEE2E6;
-            border-radius: 12px;
-        }
-        
-        .menu-button:active {
-            border: solid;
-            border-radius: 12px;
-            border-color: #6C757D;
-            text-decoration: none;
+    #menu {
+        height: 50px;
+    
+        #menu-container {
+            display: flex;
+            justify-content: space-evenly;
+            float: right;
+            margin-right: 50px;
+            width: 300px;
+            
+            .menu-button {  
+                background-color: $base-background-color;
+                color: $base-font-color;
+                font-size: 24px;
+                text-decoration: underline;
+                text-decoration-color: $button-border-color;
+                text-underline-offset: 3px;
+                border: solid $base-background-color;
+            }
+    
+            .menu-button:hover {
+                background-color: #DEE2E6;
+                border-radius: 12px;
+                cursor: pointer;
+            }
+            
+            .menu-button:active {
+                cursor: pointer;
+                border: solid;
+                border-radius: 12px;
+                border-color: $button-border-color;
+                text-decoration: none;
+            }
         }
     }
 }
+
