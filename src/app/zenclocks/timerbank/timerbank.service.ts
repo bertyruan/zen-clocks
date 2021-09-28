@@ -2,52 +2,53 @@ import { Time } from "@angular/common";
 import { Injectable, OnInit } from "@angular/core";
 import { CookieService } from "ngx-cookie-service";
 import { BehaviorSubject, Observable } from "rxjs";
-import { DashboardService } from "../dashboard/dashboard.service";
-import { Timerbank, TimerSet, TimeValue } from "../timer-constants";
+import { TimerSet, TimeValue } from "../timer-constants";
 
 @Injectable({providedIn: 'root'})
 export class TimerbankService {
     private TIMERSETS = "TIMERSETS";
+    private CURRENTSET = "CURRENTSET";
 
-    private defaultSet = {name: "default", timers: [new TimeValue(1,0)]};
- 
-    public timerBank$ = new BehaviorSubject<Timerbank>({current: this.defaultSet, sets: []});
+    private defaultCurrentSet : TimerSet = {name: "defaultCurrentSet", timers: [new TimeValue(1,0)]};
+    public currentSet$ = new BehaviorSubject<TimerSet>({name: "", timers: []});
 
-    constructor(private cookieService: CookieService, private dashboardService: DashboardService) {
+    public timerBank$ = new BehaviorSubject<TimerSet[]>([]);
+
+    constructor(private cookieService: CookieService) {
         this.loadTimerSets();
-        this.configurePostTimerSets();
+        this.configureAutoSaveTimerSets();
     }
 
     private loadTimerSets() : void {
-        let cookie = this.cookieService.get(this.TIMERSETS);
-        let bank = cookie ? JSON.parse(cookie) as Timerbank : this.timerBank$.value;
+        const bankCookie = this.cookieService.get(this.TIMERSETS);
+        const currentSetCookie = this.cookieService.get(this.CURRENTSET);
+        const bank = bankCookie ? JSON.parse(bankCookie) as TimerSet[] : [];
+        const currentSet = currentSetCookie ? JSON.parse(currentSetCookie) as TimerSet : this.defaultCurrentSet;
 
         this.timerBank$.next(bank);
-        this.dashboardService.currentSet$.next(bank.current);
+        this.currentSet$.next(currentSet);
     }
 
-    private configurePostTimerSets() {
+    private configureAutoSaveTimerSets() {
         this.timerBank$.subscribe(bank => {
             this.cookieService.set(this.TIMERSETS, JSON.stringify(bank), 1000);
         });
-        this.dashboardService.currentSet$.subscribe(set => {
-            let bank : Timerbank = {current: set, sets: this.timerBank$.value.sets};
-            this.cookieService.set(this.TIMERSETS, JSON.stringify(bank), 1000);
+        this.currentSet$.subscribe(set => {
+            this.cookieService.set(this.CURRENTSET, JSON.stringify(set), 1000);
         })
     }
 
     public getCurrent() : TimerSet {
-        return this.timerBank$.value.current;
+        return this.currentSet$.value;
     }
     
     public deleteSet(name: string) : boolean {
         const index = this.getSetIndex(name);
-        if(index >= 0 && this.timerBank$.value.sets.length > 1) {
-            this.timerBank$.value.sets.splice(this.getSetIndex(name), 1);
-            if(this.dashboardService.currentSet$.value.name === name) {
-                this.dashboardService.currentSet$.next(this.timerBank$.value.sets[0]);
+        if(index >= 0 && this.timerBank$.value.length > 1) {
+            this.timerBank$.value.splice(this.getSetIndex(name), 1);
+            if(this.currentSet$.value.name === name) {
+                this.currentSet$.next(this.timerBank$.value[0]);
             }
-            
             return true;
         }
         return false;
@@ -55,18 +56,19 @@ export class TimerbankService {
 
     public saveSet(set: TimerSet) : boolean {
         if(!set.name || this.getSetIndex(set.name) >= 0) return false;
-        let newSets = this.timerBank$.value.sets.concat(set);
-        this.timerBank$.next({current: set, sets: newSets});
+        let newSets = this.timerBank$.value.concat(set);
+        this.timerBank$.next(newSets);
+        this.currentSet$.next(set);
         return true;
     }
 
     public updateSet(set: TimerSet) {
-        let sets = this.timerBank$.value.sets;
+        let sets = this.timerBank$.value;
         sets[this.getSetIndex(set.name)] = set;
-        this.timerBank$.next({current: this.timerBank$.value.current, sets: sets})
+        this.timerBank$.next(sets)
     }
 
     private getSetIndex(name: string) : number {
-        return this.timerBank$.value.sets.findIndex(set => set.name === name);
+        return this.timerBank$.value.findIndex(set => set.name === name);
     }
 }

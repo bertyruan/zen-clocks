@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { TimerbankService } from "src/app/zenclocks/timerbank/timerbank.service";
 import { TimeValue, TimerSet } from "../timer-constants";
-import { DashboardService } from "./dashboard.service";
 
 @Component({
     templateUrl: "./dashboard.component.html",
@@ -12,16 +11,16 @@ export class DashboardComponent implements OnInit {
     sets : TimerSet[] = [];
     deleteMessage = "";
 
-    constructor(private timerbankService : TimerbankService, private dashboardService: DashboardService) {}
+    constructor(private timerbankService : TimerbankService) {}
 
     ngOnInit() {
         this.timerbankService.timerBank$.subscribe(bank => {
-            this.sets = bank.sets;
+            this.sets = bank;
         });
     }
 
     selectSet(set: TimerSet) : void {
-        this.dashboardService.currentSet$.next(set);
+        this.timerbankService.currentSet$.next(set);
     }
 
     deleteSet(name: string) : void {

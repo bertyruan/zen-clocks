@@ -18,10 +18,10 @@ export interface Timer {
     isLast: boolean
 }
 
-export interface Timerbank {
-    current: TimerSet,
-    sets: TimerSet[]
-}
+// export interface Timerbank {
+//     current: TimerSet,
+//     sets: TimerSet[]
+// }
 
 export interface TimerSet {
     name: string,
