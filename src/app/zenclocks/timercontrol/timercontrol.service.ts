@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, interval, SubscribableOrPromise, Subscription, timer } from "rxjs";
 import { filter, scan, startWith } from "rxjs/operators";
-import { Timer, TimerEvent, TimeValue } from "../timer-constants";
+import { Timer, TimerEvent, TimeValue } from "../shared/timer-constants";
 import { TimerService } from "../timer/timer.service";
 
 @Injectable({providedIn: 'root'})

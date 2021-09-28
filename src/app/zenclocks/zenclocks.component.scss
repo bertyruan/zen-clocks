@@ -1,5 +1,40 @@
+@import './shared/styles.scss';
+
 .container {
-    background-color: #F8F9FA;
-    color: #333333;
-    font-family: "Microsoft Yahei";
+    background-color: $base-background-color;
+    color: $base-font-color;
+    font-family: $base-font-family;
+}
+
+#menu {
+    height: 50px;
+
+    #menu-container {
+        display: flex;
+        justify-content: space-evenly;
+        float: right;
+        margin-right: 50px;
+        width: 300px;
+        
+        .menu-button {  
+            background-color: $base-background-color;
+            color: $base-font-color;
+            font-size: 24px;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            border: solid $base-background-color;
+        }
+
+        .menu-button:hover {
+            background-color: #DEE2E6;
+            border-radius: 12px;
+        }
+        
+        .menu-button:active {
+            border: solid;
+            border-radius: 12px;
+            border-color: #6C757D;
+            text-decoration: none;
+        }
+    }
 }

@@ -2,7 +2,7 @@ import { Time } from "@angular/common";
 import { Injectable, OnInit } from "@angular/core";
 import { CookieService } from "ngx-cookie-service";
 import { BehaviorSubject, Observable } from "rxjs";
-import { TimerSet, TimeValue } from "../timer-constants";
+import { TimerSet, TimeValue } from "../shared/timer-constants";
 
 @Injectable({providedIn: 'root'})
 export class TimerbankService {

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { NEVER, Observable, Subscription } from "rxjs";
 import { filter, tap } from "rxjs/operators";
-import { Timer, TimerEvent, TimeValue } from "../timer-constants";
+import { Timer, TimerEvent, TimeValue } from "../shared/timer-constants";
 import { TimercontrolService } from "../timercontrol/timercontrol.service";
 import { TimerService } from "./timer.service";
 

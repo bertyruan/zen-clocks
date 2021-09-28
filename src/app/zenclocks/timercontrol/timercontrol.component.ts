@@ -3,7 +3,7 @@ import { Component, OnInit } from "@angular/core";
 import { BehaviorSubject, combineLatest, interval, NEVER, noop, Observable, of, Subscription } from "rxjs";
 import { first, map, mapTo, scan, startWith, switchMap, switchMapTo, takeWhile, tap } from "rxjs/operators"
 import { TimerbankService } from "../timerbank/timerbank.service";
-import { TimerEvent, Timer, TimeValue } from "../timer-constants";
+import { TimerEvent, Timer, TimeValue } from "../shared/timer-constants";
 import { TimerService } from "../timer/timer.service";
 import { TimercontrolService } from "./timercontrol.service";
 
