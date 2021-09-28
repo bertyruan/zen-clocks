@@ -7,7 +7,7 @@ import { SandboxComponent } from './sandbox/sandbox.component';
 import { AppRoutingModule } from './app-routing.module';
 import { TetrisComponent } from './tetris/tetris.component';
 import { HomeComponent } from './home/home.component';
-import { TimercontrolModule } from './stopwatch/timercontrol.module';
+import { ZenclocksModule } from './zenclocks/zenclocks.module';
 
 @NgModule({ 
   declarations: [
@@ -20,7 +20,7 @@ import { TimercontrolModule } from './stopwatch/timercontrol.module';
     BrowserModule,
     AppRoutingModule,
     FlexLayoutModule,
-    TimercontrolModule
+    ZenclocksModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -2,11 +2,11 @@ import { Time } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { BehaviorSubject, combineLatest, interval, NEVER, noop, Observable, of, Subscription } from "rxjs";
 import { first, map, mapTo, scan, startWith, switchMap, switchMapTo, takeWhile, tap } from "rxjs/operators"
-import { TimerbankService } from "./timerbank/timerbank.service";
-import { TimerEvent, Timer, TimeValue } from "./timer-constants";
-import { TimerService } from "./timer/timer.service";
+import { TimerbankService } from "../timerbank/timerbank.service";
+import { TimerEvent, Timer, TimeValue } from "../timer-constants";
+import { TimerService } from "../timer/timer.service";
 import { TimercontrolService } from "./timercontrol.service";
-import { DashboardService } from "./dashboard/dashboard.service";
+import { DashboardService } from "../dashboard/dashboard.service";
 
 @Component({
     selector: 'app-timercontrol',

@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { TimerbankService } from "src/app/stopwatch/timerbank/timerbank.service";
+import { TimerbankService } from "src/app/zenclocks/timerbank/timerbank.service";
 import { TimeValue, TimerSet } from "../timer-constants";
 import { DashboardService } from "./dashboard.service";
 
