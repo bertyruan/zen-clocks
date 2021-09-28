@@ -4,6 +4,7 @@ export enum TimerEvent {
     RESTART,
     NEWTIME
 }
+
 interface _TimeValue {
     minutes: number, 
     seconds: number
@@ -17,11 +18,6 @@ export interface Timer {
     value: TimeValue,
     isLast: boolean
 }
-
-// export interface Timerbank {
-//     current: TimerSet,
-//     sets: TimerSet[]
-// }
 
 export interface TimerSet {
     name: string,

@@ -1,0 +1,12 @@
+<div>
+    <ng-container *ngFor="let set of sets">
+        <button (click)="selectSet(set)">
+            {{set.name}}
+            <div *ngFor="let timer of set.timers">
+                {{ timeToString(timer) }}
+            </div>
+        </button>
+        <button (click)="deleteSet(set.name)">Delete</button>
+    </ng-container>
+    {{ deleteMessage }}
+</div>

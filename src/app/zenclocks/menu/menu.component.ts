@@ -3,11 +3,11 @@ import { TimerbankService } from "src/app/zenclocks/timerbank/timerbank.service"
 import { TimeValue, TimerSet } from "../timer-constants";
 
 @Component({
-    templateUrl: "./dashboard.component.html",
-    styleUrls: ["./dashboard.component.css"],
-    selector: "app-sw-dashboard"
+    templateUrl: "./menu.component.html",
+    styleUrls: ["./menu.component.css"],
+    selector: "app-menu"
 })
-export class DashboardComponent implements OnInit {
+export class MenuComponent implements OnInit {
     sets : TimerSet[] = [];
     deleteMessage = "";
 

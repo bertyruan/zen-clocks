@@ -4,15 +4,14 @@ import { SandboxComponent } from './sandbox/sandbox.component';
 import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { TetrisComponent } from './tetris/tetris.component';
-import { TimercontrolComponent } from './zenclocks/timercontrol/timercontrol.component';
 import { HomeComponent } from './home/home.component';
-import { DashboardComponent } from './zenclocks/dashboard/dashboard.component';
+import { ZenclocksComponent } from './zenclocks/zenclocks.component';
 
 const routes: Routes = [
   {path: "", component: HomeComponent, pathMatch: 'full'},
   {path: "sandbox", component: SandboxComponent},
   {path: "tetris", component: TetrisComponent},
-  {path: "timer", component: DashboardComponent}
+  {path: "timer", component: ZenclocksComponent}
   //{path: "stopwatch", loadChildren: () => import('./stopwatch/stopwatch.module').then(m => m.StopwatchModule),}
 ];
 

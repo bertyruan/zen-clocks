@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 import { TimercontrolComponent } from './timercontrol/timercontrol.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TimerComponent } from './timer/timer.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { MenuComponent } from './menu/menu.component';
 import { ZenclocksComponent } from './zenclocks.component';
 
 @NgModule({
   declarations: [
-    DashboardComponent,
+    MenuComponent,
     TimercontrolComponent,
     TimerComponent,
     ZenclocksComponent
