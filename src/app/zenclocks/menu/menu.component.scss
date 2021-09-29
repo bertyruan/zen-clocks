@@ -1,7 +1,48 @@
 @import "../shared/styles.scss";
 
+/* Designing for scroll-bar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: gainsboro;
+    border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #6C757D;
+    border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #DEE2E6;
+}
+
 .container {
+    position: relative;
     text-align: center;
+    color: #343A40;
+
+    h1 {
+        margin-bottom: 30px;
+    }
+
+    .delete-message {
+        position: fixed;
+        margin: 0 auto 0 auto;
+        width: 200px;
+        left: 0;
+        right: 0;
+        bottom: 10%;
+        border: 1px solid #6C757D;
+        border-radius: 5px;
+        background-color: #ADB5BD;
+        font-size: 24px;
+    }
 }
 
 .popup {
@@ -10,15 +51,60 @@
     left: 0;
     right: 0;
     margin: 0 auto 0 auto;
-    background-color: #fff;// $base-background-color;
+    background-color: $base-background-color;
     max-width: 500px;
     max-height: 400px;
     height: 100%;
     border-radius: 2em;
 
-    .close-popup {
-        position: absolute;
-        left: 0;
-        margin-left: 5px;
+    .scroll-container {
+        position: relative;
+        top: 10px;
+        max-width: 480px;
+        max-height: 380px;
+        height: 100%;
+        overflow-y: scroll;
+
+        .close-popup {
+            position: absolute;
+            left: 0;
+            margin: 10px 0 0 10px;
+            background-color: $base-background-color;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #6C757D;
+            border: none;
+        }
+    
+        .close-popup:hover {
+            color: #343A40;
+        }
+    
+        .sets {
+            position: relative;
+            margin-bottom: 50px;
+    
+            button {
+                border: solid 1px $base-background-color;
+                background-color: $base-background-color;
+                font-style: $base-font-family;
+            }
+    
+            button:hover {
+                border: solid 1px #ADB5BD;
+                border-radius: 5px;
+            }
+    
+            .sets-set {
+                width: 200px;
+    
+                .sets-name {
+                    font-size: 24px;
+                }
+                .sets-timers {
+                    font-size: 16px;
+                }
+            }
+        }
     }
 }

@@ -27,6 +27,7 @@ export class MenuComponent implements OnInit {
 
     selectSet(set: TimerSet) : void {
         this.timerbankService.currentSet$.next(set);
+        this.onClose.next(null);
     }
 
     deleteSet(name: string) : void {
@@ -36,6 +37,10 @@ export class MenuComponent implements OnInit {
         else {
             this.deleteMessage = "sorry can't delete"
         } 
+    }
+
+    clearDeleteMessage() {
+        this.deleteMessage = "";
     }
 
     timeToString(timeValue: TimeValue) : string {

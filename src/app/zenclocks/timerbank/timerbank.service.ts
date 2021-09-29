@@ -46,6 +46,7 @@ export class TimerbankService {
         const index = this.getSetIndex(name);
         if(index >= 0 && this.timerBank$.value.length > 1) {
             this.timerBank$.value.splice(this.getSetIndex(name), 1);
+            this.timerBank$.next(this.timerBank$.value);
             if(this.currentSet$.value.name === name) {
                 this.currentSet$.next(this.timerBank$.value[0]);
             }
