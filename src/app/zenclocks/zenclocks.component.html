@@ -3,7 +3,7 @@
         <div id="menu-container">
             <button class="menu-button">Save</button>
             <button class="menu-button">Save as</button>
-            <button class="menu-button">Open</button>
+            <button class="menu-button" (click)="onPopupOpen()">Open</button>
         </div>
     </div>
     <div>
@@ -12,7 +12,15 @@
     <div fxLayout="row" fxLayoutAlign="center">
         <div fxFlex="5"></div>
         <app-zc-about fxFlex="20"></app-zc-about>
-        <app-zc-timercontrol fxFlex="55" fxFlexOffset="40px"></app-zc-timercontrol>
-        <app-zc-menu fxFlex="20"></app-zc-menu>
+        <app-zc-timercontrol fxFlex="auto" fxFlexOffset="40px"></app-zc-timercontrol>
+        <div fxFlex="5"></div>
     </div>
 </div>
+<div [ngClass]="isPopupOpened ? greyScreen : '' ">
+    <div id="menu-popups">
+        <ng-template [ngIf]="isPopupOpened">
+            <app-zc-menu (onClose)="onClose($event)"></app-zc-menu>
+        </ng-template>
+    </div>
+</div>
+

@@ -48,3 +48,11 @@ $button-border-color: #6C757D;
     }
 }
 
+.grey-screen {
+    position: absolute;
+    background-color: rgba(0,0,0,.6);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}

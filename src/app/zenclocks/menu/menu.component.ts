@@ -1,15 +1,17 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { TimerbankService } from "src/app/zenclocks/timerbank/timerbank.service";
 import { TimeValue, TimerSet } from "../shared/timer-constants";
 
 @Component({
     templateUrl: "./menu.component.html",
-    styleUrls: ["./menu.component.css"],
+    styleUrls: ["./menu.component.scss"],
     selector: "app-zc-menu"
 })
 export class MenuComponent implements OnInit {
     sets : TimerSet[] = [];
     deleteMessage = "";
+
+    @Output() onClose = new EventEmitter<any>();
 
     constructor(private timerbankService : TimerbankService) {}
 
@@ -17,6 +19,10 @@ export class MenuComponent implements OnInit {
         this.timerbankService.timerBank$.subscribe(bank => {
             this.sets = bank;
         });
+    }
+
+    onClosePopup() : void {
+        this.onClose.next(null);
     }
 
     selectSet(set: TimerSet) : void {

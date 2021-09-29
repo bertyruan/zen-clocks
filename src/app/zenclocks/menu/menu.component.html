@@ -1,4 +1,6 @@
-<div>
+<div class="container popup">
+    <button class="close-popup" (click)="onClosePopup()"> X </button>
+    <h1>Your Timers</h1>
     <div *ngFor="let set of sets">
         <button (click)="selectSet(set)">
             {{set.name}}

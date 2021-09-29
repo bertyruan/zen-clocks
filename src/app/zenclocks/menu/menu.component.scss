@@ -1,0 +1,24 @@
+@import "../shared/styles.scss";
+
+.container {
+    text-align: center;
+}
+
+.popup {
+    position: absolute;
+    top: 10%;
+    left: 0;
+    right: 0;
+    margin: 0 auto 0 auto;
+    background-color: #fff;// $base-background-color;
+    max-width: 500px;
+    max-height: 400px;
+    height: 100%;
+    border-radius: 2em;
+
+    .close-popup {
+        position: absolute;
+        left: 0;
+        margin-left: 5px;
+    }
+}
