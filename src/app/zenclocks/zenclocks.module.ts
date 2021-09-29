@@ -6,6 +6,7 @@ import { TimerComponent } from './timer/timer.component';
 import { MenuComponent } from './menu/menu.component';
 import { ZenclocksComponent } from './zenclocks.component';
 import { AboutComponent } from './about/about.component';
+import { PopupComponent } from './shared/popup/popup.component';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { AboutComponent } from './about/about.component';
     TimercontrolComponent,
     TimerComponent,
     ZenclocksComponent,
-    AboutComponent
+    AboutComponent,
+    PopupComponent
   ],
   imports: [
     CommonModule,
