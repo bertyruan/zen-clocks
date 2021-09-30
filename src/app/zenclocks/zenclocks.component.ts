@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit } from "@angular/core";
+import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, ViewChild } from "@angular/core";
 import { TimerbankService } from "./timerbank/timerbank.service";
 import { TimercontrolService } from "./timercontrol/timercontrol.service";
 
@@ -7,14 +7,18 @@ import { TimercontrolService } from "./timercontrol/timercontrol.service";
     templateUrl: './zenclocks.component.html',
     styleUrls: ['./zenclocks.component.scss']
 })
-export class ZenclocksComponent implements OnInit {
+export class ZenclocksComponent implements AfterViewInit {
     isPopupOpened = false;
     greyScreen = "grey-screen";
     setName = "";
 
+    @ViewChild("container") container! : ElementRef;
+
     constructor(private timercontrolService : TimercontrolService, private timerbankService : TimerbankService) {}
-    
-    ngOnInit() : void {}
+ 
+    ngAfterViewInit() : void {
+        console.log(this.container);
+    }
 
     onPopupOpen() : void {
         this.isPopupOpened = !this.isPopupOpened;
