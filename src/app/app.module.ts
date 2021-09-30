@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { TetrisComponent } from './tetris/tetris.component';
 import { HomeComponent } from './home/home.component';
 import { ZenclocksModule } from './zenclocks/zenclocks.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({ 
   declarations: [

@@ -1,5 +1,8 @@
 <div>
-    <div>timer name: {{timerName}} <button (click)="updateSet()">Update</button></div> 
+    <div>
+        Timer Name:
+        <input [(ngModel)]="timerName" #newTimerName="ngModel" required>
+    </div>
     <button (click)="addSplit()">Add Split</button>
     <div>
         <ng-container *ngFor="let timer of timers">
@@ -11,10 +14,5 @@
         <button (click)="onStart()">Start</button>
         <button (click)="onPause()">Pause</button>
         <button (click)="onRestart()">Restart</button>
-    </div>
-    <div>
-        <input #newTimerName value="timer name">
-        <button (click)="onSave(newTimerName)">Save</button>
-        <div>{{saveMessage}}</div>
     </div>
 </div>

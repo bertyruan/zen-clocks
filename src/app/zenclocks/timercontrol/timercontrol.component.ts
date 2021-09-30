@@ -1,11 +1,12 @@
 import { Time } from "@angular/common";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Output } from "@angular/core";
 import { BehaviorSubject, combineLatest, interval, NEVER, noop, Observable, of, Subscription } from "rxjs";
 import { first, map, mapTo, scan, startWith, switchMap, switchMapTo, takeWhile, tap } from "rxjs/operators"
 import { TimerbankService } from "../timerbank/timerbank.service";
 import { TimerEvent, Timer, TimeValue } from "../shared/timer-constants";
 import { TimerService } from "../timer/timer.service";
 import { TimercontrolService } from "./timercontrol.service";
+import { NgForm } from "@angular/forms";
 
 @Component({
     selector: 'app-zc-timercontrol',
@@ -17,7 +18,7 @@ export class TimercontrolComponent implements OnInit {
     saveMessage = "";
 
     constructor(private timerService: TimerService, 
-        private timercontroService: TimercontrolService, 
+        private timercontrolService: TimercontrolService, 
         private timerbankService : TimerbankService
     ) {}
 
@@ -32,42 +33,35 @@ export class TimercontrolComponent implements OnInit {
     }
 
     get timers() {
-        return this.timercontroService.queue;
+        return this.timercontrolService.queue;
     }
 
     onStart() {
-        this.timercontroService.start();
+        this.timercontrolService.start();
     }
     onPause() {
-        this.timercontroService.pause();
+        this.timercontrolService.pause();
     }
     onRestart() {
-        this.timercontroService.restart();
+        this.timercontrolService.restart();
     }
-    onSave(timerName : any) {
-        const newSet = {name: timerName.value, timers: this.timercontroService.queue.map(v => v.value)};
-        if(this.timerbankService.saveSet(newSet)) {
-            this.saveMessage = "Success!";
-        } else {
-            this.saveMessage = "Choose a different name!";
-        }
-    }
+    
     addSplit(minutes = 1, seconds = 0) {
         const newTimer = new TimeValue(minutes,seconds);
-        this.timercontroService.addToQueue(newTimer);
+        this.timercontrolService.addToQueue(newTimer);
     }
     
     removeSplit(id: number) {
-        this.timercontroService.removeFromQueue(id);
+        this.timercontrolService.removeFromQueue(id);
     }
 
     updateSet() : void {
-        let timeValues = this.timercontroService.queue.map(timer => timer.value);
+        let timeValues = this.timercontrolService.queue.map(timer => timer.value);
         this.timerbankService.updateSet({name: this.timerName, timers: timeValues});
     }    
 
     private clearSplits() {
-        this.timercontroService.removeAllFromQueue();
+        this.timercontrolService.removeAllFromQueue();
     }
 
 }

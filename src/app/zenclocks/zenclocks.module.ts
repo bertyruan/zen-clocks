@@ -7,6 +7,7 @@ import { MenuComponent } from './menu/menu.component';
 import { ZenclocksComponent } from './zenclocks.component';
 import { AboutComponent } from './about/about.component';
 import { PopupComponent } from './shared/popup/popup.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { PopupComponent } from './shared/popup/popup.component';
   ],
   imports: [
     CommonModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    FormsModule
   ]
 }) export class ZenclocksModule { }

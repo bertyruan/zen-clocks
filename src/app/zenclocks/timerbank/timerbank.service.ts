@@ -56,7 +56,11 @@ export class TimerbankService {
     }
 
     public saveSet(set: TimerSet) : boolean {
-        if(!set.name || this.getSetIndex(set.name) >= 0) return false;
+        if(!set.name) return false;
+        if(this.getSetIndex(set.name) >= 0) {
+            this.updateSet(set);
+            return true;
+        } 
         let newSets = this.timerBank$.value.concat(set);
         this.timerBank$.next(newSets);
         this.currentSet$.next(set);
@@ -67,6 +71,7 @@ export class TimerbankService {
         let sets = this.timerBank$.value;
         sets[this.getSetIndex(set.name)] = set;
         this.timerBank$.next(sets)
+        this.currentSet$.next(set);
     }
 
     private getSetIndex(name: string) : number {
