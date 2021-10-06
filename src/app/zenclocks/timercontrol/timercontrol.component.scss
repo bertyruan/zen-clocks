@@ -1,0 +1,8 @@
+@import "../shared/styles.scss";
+
+.timer-control-panel {
+    button {
+        border: none;
+        background-color: $base-background-color;
+    }
+}

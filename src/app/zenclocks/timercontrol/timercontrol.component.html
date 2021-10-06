@@ -10,9 +10,15 @@
             <button (click)="removeSplit(timer.id)">Remove</button>
         </ng-container>
     </div>
-    <div>
-        <button (click)="onStart()">Start</button>
-        <button (click)="onPause()">Pause</button>
-        <button (click)="onRestart()">Restart</button>
+    <div class="timer-control-panel">
+        <button (click)="onStart()">
+            <fa-icon [icon]="['fas', 'play-circle']" size="10x"></fa-icon>
+        </button>
+        <button (click)="onPause()">
+            <fa-icon [icon]="['fas', 'pause-circle']"></fa-icon>
+        </button>
+        <button (click)="onRestart()">
+            <fa-icon [icon]="['fas', 'redo']"></fa-icon>
+        </button>
     </div>
 </div>

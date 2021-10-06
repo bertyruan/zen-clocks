@@ -6,8 +6,9 @@ import { TimerComponent } from './timer/timer.component';
 import { MenuComponent } from './menu/menu.component';
 import { ZenclocksComponent } from './zenclocks.component';
 import { AboutComponent } from './about/about.component';
-import { PopupComponent } from './shared/popup/popup.component';
 import { FormsModule } from '@angular/forms';
+import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { faCaretLeft, faCaretRight, faPauseCircle, faPlayCircle, faRedo } from '@fortawesome/free-solid-svg-icons';
 
 @NgModule({
   declarations: [
@@ -15,12 +16,16 @@ import { FormsModule } from '@angular/forms';
     TimercontrolComponent,
     TimerComponent,
     ZenclocksComponent,
-    AboutComponent,
-    PopupComponent
+    AboutComponent
   ],
   imports: [
     CommonModule,
     FlexLayoutModule,
-    FormsModule
+    FormsModule,
+    FontAwesomeModule
   ]
-}) export class ZenclocksModule { }
+}) export class ZenclocksModule { 
+  constructor(private library: FaIconLibrary) {
+    library.addIcons(faPlayCircle, faPauseCircle, faRedo, faCaretLeft, faCaretRight);
+  }
+}

@@ -9,6 +9,8 @@ import { TetrisComponent } from './tetris/tetris.component';
 import { HomeComponent } from './home/home.component';
 import { ZenclocksModule } from './zenclocks/zenclocks.module';
 import { FormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { CommonModule } from '@angular/common';
 
 @NgModule({ 
   declarations: [
@@ -21,7 +23,8 @@ import { FormsModule } from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     FlexLayoutModule,
-    ZenclocksModule
+    ZenclocksModule,
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
