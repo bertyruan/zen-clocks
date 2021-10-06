@@ -8,7 +8,7 @@ import { HomeComponent } from './home/home.component';
 import { ZenclocksComponent } from './zenclocks/zenclocks.component';
 
 const routes: Routes = [
-  {path: "", component: HomeComponent, pathMatch: 'full'},
+  {path: "", redirectTo: "timer", pathMatch: 'full'},
   {path: "sandbox", component: SandboxComponent},
   {path: "tetris", component: TetrisComponent},
   {path: "timer", component: ZenclocksComponent}

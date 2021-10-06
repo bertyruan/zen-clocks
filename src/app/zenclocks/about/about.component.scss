@@ -1,0 +1,70 @@
+.wrapper {
+    width: 200px;
+
+    @media screen and (max-width: 650px) {
+        width: 120px;
+    }
+}
+
+.hide-toggle-button {
+    animation-name: hide-toggle-button;
+    animation-duration: 4s;
+    animation-fill-mode: forwards;
+}
+
+.hide-toggle-button:hover {
+    animation-name: show-toggle-button;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+.collapse {
+    animation-name: collapse;   
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+}
+
+.expand {
+    animation-name: expand;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes collapse {
+    from {
+        margin-left: 0;
+    }
+    to {
+        margin-left: -300px;
+    } 
+}
+
+@keyframes expand {
+    from {
+        margin-left: -300px;
+    }
+    to {
+        margin-left: 0;
+    }
+}
+
+@keyframes hide-toggle-button {
+    from {
+        opacity: 100;
+    }
+    25% {
+        opacity: 50;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes show-toggle-button {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 100;
+    }
+}
