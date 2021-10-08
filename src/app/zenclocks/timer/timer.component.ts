@@ -7,7 +7,8 @@ import { TimerService } from "./timer.service";
 
 @Component({
     selector: 'app-zc-timer',
-    templateUrl: './timer.component.html'
+    templateUrl: './timer.component.html',
+    styleUrls: ['./timer.component.scss']
 })
 export class TimerComponent implements OnInit {
     timeInputValue!: TimeValue;
