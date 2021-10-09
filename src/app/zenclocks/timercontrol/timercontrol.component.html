@@ -1,14 +1,13 @@
 <div>
-    <div class="timer-name">
+    <div class="timer-name" flexLayout="row">
         <h1>Timer Name:</h1>
         <input [(ngModel)]="timerName" #newTimerName="ngModel" required>
     </div>
     <div class="timer-display">
         <ng-container *ngFor="let timer of timers">
-            <div fxFlex="row" >
+            
                 <app-zc-timer [timer]="timer"></app-zc-timer>
-                <button fxFlexAlign="end" (click)="removeSplit(timer.id)">Remove</button>
-            </div>
+            
         </ng-container>
         <button class="add-split" (click)="addSplit()"> + </button>
     </div>

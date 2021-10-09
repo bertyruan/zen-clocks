@@ -1,11 +1,15 @@
 @import "../shared/styles.scss";
 
 .timer-name {
+    margin-bottom: 2em;
+
     h1 {
-        font-size: 24px;
+        font-size: 18px;
         font-weight: 600;
+        display: inline;
+        margin-right: 1em;
     }
-    input {
+    input { 
         border: 2px solid #CED4DA;
         border-radius: 10px;
         background-color: #DEE2E6;

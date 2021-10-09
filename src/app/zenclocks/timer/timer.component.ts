@@ -65,4 +65,8 @@ export class TimerComponent implements OnInit {
         this.timeDisplay = this.timeInputValue.clone();
         this.timercontrol.updateTime(this.timer.id, this.timeInputValue);
     }
+
+    removeSplit() {
+        this.timercontrol.removeFromQueue(this.timer.id);
+    }
 }

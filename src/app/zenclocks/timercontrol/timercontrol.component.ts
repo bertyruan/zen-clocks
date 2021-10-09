@@ -50,10 +50,6 @@ export class TimercontrolComponent implements OnInit {
         const newTimer = new TimeValue(minutes,seconds);
         this.timercontrolService.addToQueue(newTimer);
     }
-    
-    removeSplit(id: number) {
-        this.timercontrolService.removeFromQueue(id);
-    }
 
     updateSet() : void {
         let timeValues = this.timercontrolService.queue.map(timer => timer.value);
