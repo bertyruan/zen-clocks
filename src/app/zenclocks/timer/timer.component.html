@@ -1,9 +1,14 @@
 <div fxLayout="row" fxLayoutGap="10px">
-    <div class="time-display">{{displayTime}}</div>
-    <div class="time-input">
-        <input #newMinutes [value]="timeInputValue.minutes">
-        <input #newSeconds [value]="timeInputValue.seconds">
-        <button (click)="updateTime(newMinutes,newSeconds)">Okay</button>
-        <button (click)="removeSplit()">Remove</button>
+    <div *ngIf="!isEditMode; else editMode" (dblclick)="toggleEditMode()" class="time-display">
+        {{displayTime}}
+        <button class="remove-timer" (click)="removeTimer()">x</button>
     </div>
+    <ng-template #editMode>
+        <div class="time-input">
+            <input #newMinutes [value]="timeInputValue.minutes">
+            <input #newSeconds [value]="padSeconds(timeInputValue.seconds)">
+        </div>
+        
+        <!-- <button (click)="updateTime(newMinutes,newSeconds)">Okay</button> -->
+    </ng-template>
 </div>

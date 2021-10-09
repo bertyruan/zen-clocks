@@ -1,17 +1,17 @@
 <div>
-    <div class="timer-name" flexLayout="row">
+    <div class="timer-name">
         <h1>Timer Name:</h1>
         <input [(ngModel)]="timerName" #newTimerName="ngModel" required>
     </div>
-    <div class="timer-display">
+    <div class="timer-display" fxLayout="column" fxLayoutAlign="center center">
         <ng-container *ngFor="let timer of timers">
-            
+            <div class="timer-display-container">
                 <app-zc-timer [timer]="timer"></app-zc-timer>
-            
+            </div>
         </ng-container>
         <button class="add-split" (click)="addSplit()"> + </button>
     </div>
-    <div class="timer-control-panel" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap=5px;>
+    <div class="timer-control-panel" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5%">
         <button (click)="onPause()">
             Pause
         </button>

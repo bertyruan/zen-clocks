@@ -10,11 +10,10 @@
     </div>
     <div fxLayout="row" fxLayoutAlign="center">
         <div fxFlex="5"></div>
-
         <app-zc-about fxFlex="20"></app-zc-about>
         <div fxFlex="5"></div>
-        <app-zc-timercontrol #timercontrol fxFlex="auto" fxFlexOffset="40px" setName=setName></app-zc-timercontrol>
-        
+        <app-zc-timercontrol #timercontrol fxFlex="auto" setName=setName></app-zc-timercontrol>
+        <div fxFlex="30"></div>
     </div>
 </div>
 <div [ngClass]="isPopupOpened ? greyScreen : '' ">

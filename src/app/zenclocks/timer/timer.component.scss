@@ -1,15 +1,39 @@
+@import "../shared/styles.scss";
+
 .time-display {
+    position: relative;
     font-weight: 600;
-    font-size: 16px;   
+    font-size: 36px;   
+    border: 2px solid #CED4DA;
+    border-radius: 10px;
+    padding: .5em .75em .5em .75em;
+
+    .remove-timer {
+        position: absolute;
+        top: 0;
+        right: 0;
+        border: .01px $base-background-color;
+        border-radius: 100px;
+        background-color: $base-background-color;
+    }
 }
 
 .time-input {
     input {
         border: 2px solid #CED4DA;
         border-radius: 10px;
-        background-color: #DEE2E6;
-        font-size: 14px;
-        width: 100px;
+        background-color: #E9ECEF;
+        font-size: 36px;
+        text-align: center;
+        width: 70px;
+        height: 85px;
+    }
+
+    input:first-child {
+        margin-right: 20px;
+    }
+    input:last-child {
+        width: 80px;
     }
    
     button {

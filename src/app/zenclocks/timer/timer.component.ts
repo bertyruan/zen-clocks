@@ -15,6 +15,7 @@ export class TimerComponent implements OnInit {
     timeDisplay!: TimeValue;
     controller : Subscription = NEVER.subscribe();
     clock : Subscription = NEVER.subscribe();
+    isEditMode = false;
 
     @Input()
     timer!: Timer;
@@ -66,7 +67,15 @@ export class TimerComponent implements OnInit {
         this.timercontrol.updateTime(this.timer.id, this.timeInputValue);
     }
 
-    removeSplit() {
+    padSeconds(seconds: number) {
+        return seconds < 10 ? "0" + seconds.toString() : seconds.toString();
+    }
+
+    removeTimer() {
         this.timercontrol.removeFromQueue(this.timer.id);
+    }
+
+    toggleEditMode() {
+        this.isEditMode = !this.isEditMode;
     }
 }
