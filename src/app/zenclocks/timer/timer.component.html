@@ -4,11 +4,9 @@
         <button class="remove-timer" (click)="removeTimer()">x</button>
     </div>
     <ng-template #editMode>
-        <div class="time-input">
-            <input #newMinutes [value]="timeInputValue.minutes">
-            <input #newSeconds [value]="padSeconds(timeInputValue.seconds)">
+        <div [formGroup]="timerForm" class="time-input" (click)="maintainEditMode()">
+            <input formControlName="minutes">
+            <input formControlName="seconds">
         </div>
-        
-        <!-- <button (click)="updateTime(newMinutes,newSeconds)">Okay</button> -->
     </ng-template>
 </div>

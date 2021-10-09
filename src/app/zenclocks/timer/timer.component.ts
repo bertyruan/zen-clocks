@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { NEVER, Observable, Subscription } from "rxjs";
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
+import { FormControl, FormGroup } from "@angular/forms";
+import { NEVER, Subscription } from "rxjs";
 import { filter, tap } from "rxjs/operators";
-import { Timer, TimerEvent, TimeValue } from "../shared/timer-constants";
+import { Timer, TimerEditState, TimerEvent, TimeValue } from "../shared/timer-constants";
 import { TimercontrolService } from "../timercontrol/timercontrol.service";
 import { TimerService } from "./timer.service";
 
@@ -11,6 +12,7 @@ import { TimerService } from "./timer.service";
     styleUrls: ['./timer.component.scss']
 })
 export class TimerComponent implements OnInit {
+    timerForm! : FormGroup;
     timeInputValue!: TimeValue;
     timeDisplay!: TimeValue;
     controller : Subscription = NEVER.subscribe();
@@ -20,11 +22,26 @@ export class TimerComponent implements OnInit {
     @Input()
     timer!: Timer;
 
-    constructor(private timerService : TimerService, private timercontrol : TimercontrolService) {}
+    constructor(
+        private timerService : TimerService, 
+        private timercontrol : TimercontrolService) {}
 
     ngOnInit() {
         this.initTimer();
         this.setupRestart();
+        this.initForm();
+        this.timerService.exitEditMode$.subscribe(() => {
+            console.log("exit");
+            this.updateTime(this.timerForm.value.minutes, this.timerForm.value.seconds);
+            this.isEditMode = false;
+        });
+    }
+
+    initForm() {
+        this.timerForm = new FormGroup({
+            'minutes': new FormControl(this.timeInputValue.minutes),
+            'seconds': new FormControl(this.padSeconds(this.timeInputValue.seconds))
+        });
     }
 
     initTimer() {
@@ -62,7 +79,7 @@ export class TimerComponent implements OnInit {
     }
 
     updateTime(newMinutes: any, newSeconds:any){
-        this.timeInputValue = new TimeValue(newMinutes.value, newSeconds.value);
+        this.timeInputValue = new TimeValue(+newMinutes, +newSeconds);
         this.timeDisplay = this.timeInputValue.clone();
         this.timercontrol.updateTime(this.timer.id, this.timeInputValue);
     }
@@ -77,5 +94,10 @@ export class TimerComponent implements OnInit {
 
     toggleEditMode() {
         this.isEditMode = !this.isEditMode;
+        this.timerService.timerEditModeState$.next(TimerEditState.MAINTAIN);
+    }
+
+    maintainEditMode () : void {
+        this.timerService.timerEditModeState$.next(TimerEditState.MAINTAIN);
     }
 }

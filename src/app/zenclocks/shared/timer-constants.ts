@@ -5,6 +5,13 @@ export enum TimerEvent {
     NEWTIME
 }
 
+export enum TimerEditState {
+    MAINTAIN,
+    _MAINTAIN,
+    EXIT,
+    NULL
+}
+
 interface _TimeValue {
     minutes: number, 
     seconds: number

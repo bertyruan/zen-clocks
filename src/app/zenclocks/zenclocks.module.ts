@@ -6,7 +6,7 @@ import { TimerComponent } from './timer/timer.component';
 import { MenuComponent } from './menu/menu.component';
 import { ZenclocksComponent } from './zenclocks.component';
 import { AboutComponent } from './about/about.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { faCaretLeft, faCaretRight, faPauseCircle, faPlayCircle, faRedo } from '@fortawesome/free-solid-svg-icons';
 
@@ -21,6 +21,7 @@ import { faCaretLeft, faCaretRight, faPauseCircle, faPlayCircle, faRedo } from '
   imports: [
     CommonModule,
     FlexLayoutModule,
+    ReactiveFormsModule,
     FormsModule,
     FontAwesomeModule
   ]
