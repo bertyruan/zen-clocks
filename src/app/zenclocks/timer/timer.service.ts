@@ -19,7 +19,7 @@ export class TimerService {
     constructor() {
         this.timerEditModeState$.pipe(
             scan((state, value) => {
-                console.log(`value:${value},state:${state}`);
+                // console.log(`value:${value},state:${state}`);
                 if(value === TimerEditState.MAINTAIN) return value;
                 if(value === TimerEditState.EXIT) {
                     if(state === TimerEditState.MAINTAIN)
@@ -30,7 +30,7 @@ export class TimerService {
                 return TimerEditState.NULL;
             }, TimerEditState.NULL),
             filter(state => state === TimerEditState.EXIT)
-        ).subscribe(() => { console.log("nani"); this.exitEditMode$.next(null)});
+        ).subscribe(() => { this.exitEditMode$.next(null)});
     }
 
     public getClock(minutes: number, seconds: number) : Observable<number> {

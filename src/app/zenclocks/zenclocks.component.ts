@@ -9,7 +9,7 @@ import { TimercontrolService } from "./timercontrol/timercontrol.service";
     templateUrl: './zenclocks.component.html',
     styleUrls: ['./zenclocks.component.scss']
 })
-export class ZenclocksComponent implements AfterViewInit {
+export class ZenclocksComponent {
     isPopupOpened = false;
     greyScreen = "grey-screen";
     setName = "";
@@ -20,11 +20,6 @@ export class ZenclocksComponent implements AfterViewInit {
         private timerService: TimerService, 
         private timercontrolService : TimercontrolService, 
         private timerbankService : TimerbankService) {}
- 
-    ngAfterViewInit() : void {
-        // console.log(this.container);
-        // this.container.nativeElement.addEventListener("click", console.log);
-    }
 
     onPopupOpen() : void {
         this.isPopupOpened = !this.isPopupOpened;

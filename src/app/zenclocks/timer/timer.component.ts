@@ -31,7 +31,6 @@ export class TimerComponent implements OnInit {
         this.setupRestart();
         this.initForm();
         this.timerService.exitEditMode$.subscribe(() => {
-            console.log("exit");
             this.updateTime(this.timerForm.value.minutes, this.timerForm.value.seconds);
             this.isEditMode = false;
         });
@@ -49,7 +48,7 @@ export class TimerComponent implements OnInit {
         this.timeInputValue = this.timer.value.clone();
         this.controller = this.timercontrol.startTimer$.pipe(
             filter(t => t?.id === this.timer.id),
-            tap(t => console.log(t.id, t?.id === this.timer.id)),
+            // tap(t => console.log(t.id, t?.id === this.timer.id)),
         ).subscribe(
            () => this.startClock()
         );
