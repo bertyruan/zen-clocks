@@ -23,8 +23,8 @@ export class TimerbankService {
         const bankCookie = this.cookieService.get(this.TIMERSETS);
         const currentSetCookie = this.cookieService.get(this.CURRENTSET);
         const bank = bankCookie ? JSON.parse(bankCookie) as TimerSet[] : [];
-        const currentSet = currentSetCookie ? JSON.parse(currentSetCookie) as TimerSet : this.defaultCurrentSet;
-
+        const _currentSet = currentSetCookie ? JSON.parse(currentSetCookie) as TimerSet : this.defaultCurrentSet;
+        const currentSet = this.reparseSet(_currentSet);
         this.timerBank$.next(bank);
         this.currentSet$.next(currentSet);
     }
@@ -76,5 +76,13 @@ export class TimerbankService {
 
     private getSetIndex(name: string) : number {
         return this.timerBank$.value.findIndex(set => set.name === name);
+    }
+
+    private reparseSet(set: TimerSet) {
+        const newSet : TimerSet = {name: set.name, timers: []};
+        set.timers.forEach(timeValue => {
+            newSet.timers.push(new TimeValue(timeValue.minutes, timeValue.seconds));
+        });
+        return newSet;
     }
 }

@@ -46,7 +46,7 @@ export class TimerService {
         return combineLatest([this.timeEvents$, this.timeValues$]).pipe(
             filter(arr => arr[1].isValid),
             map(arr => {
-                return [arr[0], arr[1].toSeconds()] 
+                return [arr[0], +TimeValue.toString(arr[1].minutes, arr[1].seconds)] 
             }),
             switchMap(arr => {
                 let t = arr[0];

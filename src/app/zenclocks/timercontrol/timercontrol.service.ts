@@ -89,6 +89,7 @@ export class TimercontrolService {
 
     public removeAllFromQueue() : void {
         this.queue = [];
+        this.activeClockIndex = -1;
     }
 
     public updateTime(id: number, timeValue: TimeValue) {

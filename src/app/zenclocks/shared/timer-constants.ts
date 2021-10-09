@@ -43,7 +43,11 @@ export class TimeValue implements _TimeValue  {
     }
     
     toSeconds() : number {
-        return this.minutes *60 + this.seconds;
+        return TimeValue.toSeconds(this.minutes, this.seconds);
+    }
+
+    static toSeconds(minutes: number, seconds: number) {
+        return minutes *60 + seconds;
     }
 
     toString() : string {

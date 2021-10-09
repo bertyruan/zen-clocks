@@ -17,7 +17,8 @@ export class TimercontrolComponent implements OnInit {
     timerName = "";
     saveMessage = "";
 
-    constructor(private timerService: TimerService, 
+    constructor(
+        private timerService: TimerService, 
         private timercontrolService: TimercontrolService, 
         private timerbankService : TimerbankService
     ) {}
@@ -28,6 +29,9 @@ export class TimercontrolComponent implements OnInit {
                 this.timerName = set.name;
                 this.clearSplits();
                 set.timers.forEach(timer => this.addSplit(timer.minutes, timer.seconds));
+                this.timerService.timeValues$.next(set.timers[0]);
+                this.timerService.timeEvents$.next(TimerEvent.NEWTIME);
+                this.timerService.timeEvents$.next(TimerEvent.PAUSE);
             }
         });
     }

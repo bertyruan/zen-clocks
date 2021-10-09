@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { TimerbankService } from "src/app/zenclocks/timerbank/timerbank.service";
-import { TimeValue, TimerSet } from "../shared/timer-constants";
+import { TimeValue, TimerSet, TimerEvent } from "../shared/timer-constants";
+import { TimerService } from "../timer/timer.service";
 
 @Component({
     templateUrl: "./menu.component.html",
