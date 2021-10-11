@@ -46,7 +46,7 @@ export class TimercontrolService {
             this.activeClockIndex++;
             this.startTimer.next(this.queue[this.activeClockIndex]);
         }
-        this.timerService.timeValues$.next(this.queue[this.activeClockIndex].value.clone());
+        //this.timerService.timeValues$.next(this.queue[this.activeClockIndex].value.clone());
         this.timerService.timeEvents$.next(TimerEvent.START);
     }
 

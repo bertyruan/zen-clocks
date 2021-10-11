@@ -58,10 +58,10 @@ export class TimerComponent implements OnInit {
         this.clock = this.timerService.getNewClock(this.timer.value.minutes,this.timer.value.seconds).subscribe({next: (timeLeft) => {
             this.timeDisplay.minutes = Math.floor(timeLeft / 60); 
             this.timeDisplay.seconds = timeLeft - (this.timeDisplay.minutes * 60);
-            if(this.timeDisplay.toSeconds() === 0) { 
-                const isLast = this.timer.isLast ? this.timerService.onNextAudio(true) : this.timerService.onNextAudio();
-            }
         }, complete: () => { 
+            this.timeDisplay.minutes = 0;
+            this.timeDisplay.seconds = 0;
+            this.timerService.onNextAudio(this.timer.isLast);
             this.timercontrol.endTimer$.next(this.timer);
         }});
         this.timerService.timeEvents$.next(TimerEvent.START);
