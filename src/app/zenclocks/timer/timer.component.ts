@@ -31,8 +31,16 @@ export class TimerComponent implements OnInit, OnDestroy {
         this.setupRestart();
         this.initForm();
         this.timerService.exitEditMode$.subscribe(() => {
-            this.updateTime(this.timerForm.value.minutes, this.timerForm.value.seconds);
-            this.isEditMode = false;
+            if(this.isEditMode) {
+                //call unsubscribe before updating
+                this.clock.unsubscribe();
+                this.controller.unsubscribe();
+                this.updateTime(this.timerForm.value.minutes, this.timerForm.value.seconds);
+                this.initTimer();
+                this.timerService.timeEvents$.next(TimerEvent.PAUSE);
+                //this.timeDisplay = new TimeValue(this.timerForm.value.minutes, this.timerForm.value.seconds);
+                this.isEditMode = false;
+            }
         });
     }
 
@@ -53,7 +61,6 @@ export class TimerComponent implements OnInit, OnDestroy {
         this.timeInputValue = this.timer.value.clone();
         this.controller = this.timercontrolService.startTimer$.pipe(
             filter(t => t?.id === this.timer.id),
-            // tap(t => console.log(t.id, t?.id === this.timer.id)),
         ).subscribe(
            () => this.startClock()
         );
@@ -98,7 +105,8 @@ export class TimerComponent implements OnInit, OnDestroy {
     }
 
     toggleEditMode() {
-        this.isEditMode = !this.isEditMode;
+        this.isEditMode = true;
+        this.timerService.timeEvents$.next(TimerEvent.PAUSE);
         this.timerService.timerEditModeState$.next(TimerEditState.MAINTAIN);
     }
 

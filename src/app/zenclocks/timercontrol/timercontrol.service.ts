@@ -95,8 +95,6 @@ export class TimercontrolService {
     public updateTime(id: number, timeValue: TimeValue) {
         const timerIndex = this.queue.findIndex(t => t.id === id);
         if(timerIndex === this.activeClockIndex) {
-            this.timerService.timeEvents$.next(TimerEvent.NEWTIME);
-            this.timerService.timeValues$.next(timeValue.clone());
             this.restart();
             this.timerService.timeEvents$.next(TimerEvent.PAUSE);
         }
