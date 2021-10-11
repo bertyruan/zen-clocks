@@ -97,7 +97,8 @@ export class TimercontrolService {
         if(timerIndex === this.activeClockIndex) {
             this.timerService.timeEvents$.next(TimerEvent.NEWTIME);
             this.timerService.timeValues$.next(timeValue.clone());
-            
+            this.restart();
+            this.timerService.timeEvents$.next(TimerEvent.PAUSE);
         }
         this.queue[timerIndex].value.minutes = timeValue.minutes;
         this.queue[timerIndex].value.seconds = timeValue.seconds;

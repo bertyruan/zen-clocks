@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
 import { NEVER, Subscription } from "rxjs";
 import { filter, tap } from "rxjs/operators";
@@ -11,7 +11,7 @@ import { TimerService } from "./timer.service";
     templateUrl: './timer.component.html',
     styleUrls: ['./timer.component.scss']
 })
-export class TimerComponent implements OnInit {
+export class TimerComponent implements OnInit, OnDestroy {
     timerForm! : FormGroup;
     timeInputValue!: TimeValue;
     timeDisplay!: TimeValue;
@@ -24,7 +24,7 @@ export class TimerComponent implements OnInit {
 
     constructor(
         private timerService : TimerService, 
-        private timercontrol : TimercontrolService) {}
+        private timercontrolService : TimercontrolService) {}
 
     ngOnInit() {
         this.initTimer();
@@ -34,6 +34,11 @@ export class TimerComponent implements OnInit {
             this.updateTime(this.timerForm.value.minutes, this.timerForm.value.seconds);
             this.isEditMode = false;
         });
+    }
+
+    ngOnDestroy() {
+        this.controller.unsubscribe();
+        this.clock.unsubscribe();
     }
 
     initForm() {
@@ -46,7 +51,7 @@ export class TimerComponent implements OnInit {
     initTimer() {
         this.timeDisplay = this.timer.value.clone();
         this.timeInputValue = this.timer.value.clone();
-        this.controller = this.timercontrol.startTimer$.pipe(
+        this.controller = this.timercontrolService.startTimer$.pipe(
             filter(t => t?.id === this.timer.id),
             // tap(t => console.log(t.id, t?.id === this.timer.id)),
         ).subscribe(
@@ -62,7 +67,7 @@ export class TimerComponent implements OnInit {
             this.timeDisplay.minutes = 0;
             this.timeDisplay.seconds = 0;
             this.timerService.onNextAudio(this.timer.isLast);
-            this.timercontrol.endTimer$.next(this.timer);
+            this.timercontrolService.endTimer$.next(this.timer);
         }});
         this.timerService.timeEvents$.next(TimerEvent.START);
     }
@@ -81,7 +86,7 @@ export class TimerComponent implements OnInit {
     updateTime(newMinutes: any, newSeconds:any){
         this.timeInputValue = new TimeValue(+newMinutes, +newSeconds);
         this.timeDisplay = this.timeInputValue.clone();
-        this.timercontrol.updateTime(this.timer.id, this.timeInputValue);
+        this.timercontrolService.updateTime(this.timer.id, this.timeInputValue);
     }
 
     padSeconds(seconds: number) {
@@ -89,7 +94,7 @@ export class TimerComponent implements OnInit {
     }
 
     removeTimer() {
-        this.timercontrol.removeFromQueue(this.timer.id);
+        this.timercontrolService.removeFromQueue(this.timer.id);
     }
 
     toggleEditMode() {

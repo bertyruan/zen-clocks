@@ -39,6 +39,8 @@ export class TimercontrolComponent implements OnInit {
 
     onStart() {
         this.timercontrolService.start();
+        const newSet = {name: this.timerName, timers: this.timercontrolService.queue.map(v => v.value)};
+        this.timerbankService.saveSet(newSet);
     }
     onPause() {
         this.timercontrolService.pause();

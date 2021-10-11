@@ -52,10 +52,10 @@ export class TimerService {
                 return interval(1000).pipe(mapTo(arr));
             }),
             scan((timeLeft : number, arr)=> {
-                if(arr[0] === TimerEvent.NEWTIME) return arr[1] ;
-                if(arr[0] === TimerEvent.RESTART) return arr[1] ;
+                if(arr[0] === TimerEvent.NEWTIME) return arr[1];
+                if(arr[0] === TimerEvent.RESTART) return arr[1];
                 return timeLeft - 1;
-            }, +minutes * 60 + +seconds ),
+            }, +minutes * 60 + +seconds),
             takeWhile((timeLeft) => timeLeft >= 1)
         );
         return clock;
