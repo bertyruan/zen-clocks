@@ -1,9 +1,16 @@
+@import '../shared/styles.scss';
+
 .wrapper {
     width: 200px;
 
     @media screen and (max-width: 650px) {
         width: 120px;
     }
+}
+
+.toggle-button {
+    border: none;
+    background-color: $base-background-color;
 }
 
 .hide-toggle-button {
@@ -56,7 +63,7 @@
         opacity: 50;
     }
     to {
-        opacity: 0;
+        opacity: .3;
     }
 }
 

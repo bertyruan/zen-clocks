@@ -6,7 +6,7 @@ import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
     styleUrls: ["./about.component.scss"]
 })
 export class AboutComponent implements OnInit {
-    slideBarState : "none" | "collapse" | "expand" = "none";
+    slideBarState : "none" | "collapse" | "expand" = "expand";
 
     @ViewChild("slideBar") slideBar! : ElementRef;
     

@@ -1,11 +1,30 @@
-<button (click)="toggleSlideBar()" [ngClass]="hideToggleButton()">Toggle</button>
-<div class="wrapper" [ngClass]="slideBarState" #slideBar>
-    <p>
-        About: <br/> When the first clock ends, a bell will chime and the next clock will start.
-    </p>
-    <p>
-        Great for timing your meditation and pranayma practices in one continuous sequence.
-    </p>
+<div fxLayout="row">
+    <button 
+        (click)="toggleSlideBar()" 
+        [ngClass]="hideToggleButton()"
+        class="toggle-button"
+        fxFlexAlign="center" 
+        fxFlex="15%"
+    >
+        <div *ngIf="slideBarState === 'expand'; else caretRight">
+            <fa-icon [icon]="['fas', 'caret-left']" size="2x"></fa-icon>
+        </div>
+        <ng-template #caretRight>
+            <fa-icon [icon]="['fas', 'caret-right']" size="2x" [ngClass]="hideToggleButton()"></fa-icon>
+        </ng-template>
+    </button>
+    <div class="wrapper" [ngClass]="slideBarState" #slideBar>
+        <div>
+            <p>
+                About: <br/> When the first clock ends, a bell will chime and the next clock will start.
+            </p>
+            <p>
+                Double click a timer to edit it. Change the timer name and click save to create a new timer.
+            </p>
+            <p>
+                Great for timing your meditation and pranayma practices in one continuous sequence.
+            </p>
+        </div>
+    </div>    
 </div>
-<!-- <fa-icon [icon]="['fas', 'caret-left']"></fa-icon>
-<fa-icon [icon]="['fas', 'caret-right']"></fa-icon> -->
+
