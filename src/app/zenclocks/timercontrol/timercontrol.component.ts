@@ -29,9 +29,6 @@ export class TimercontrolComponent implements OnInit {
                 this.timerName = set.name;
                 this.clearSplits();
                 set.timers.forEach(timer => this.addSplit(timer.minutes, timer.seconds));
-                this.timerService.timeValues$.next(set.timers[0]);
-                this.timerService.timeEvents$.next(TimerEvent.NEWTIME);
-                this.timerService.timeEvents$.next(TimerEvent.PAUSE);
             }
         });
     }
@@ -50,7 +47,7 @@ export class TimercontrolComponent implements OnInit {
         this.timercontrolService.restart();
     }
     
-    addSplit(minutes = 1, seconds = 0) {
+    addSplit(minutes=1, seconds=0) {
         const newTimer = new TimeValue(minutes,seconds);
         this.timercontrolService.addToQueue(newTimer);
     }

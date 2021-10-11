@@ -55,7 +55,7 @@ export class TimerComponent implements OnInit {
     }
 
     startClock() {
-        this.clock = this.timerService.getClock(this.timer.value.minutes,this.timer.value.seconds).subscribe({next: (timeLeft) => {
+        this.clock = this.timerService.getNewClock(this.timer.value.minutes,this.timer.value.seconds).subscribe({next: (timeLeft) => {
             this.timeDisplay.minutes = Math.floor(timeLeft / 60); 
             this.timeDisplay.seconds = timeLeft - (this.timeDisplay.minutes * 60);
             if(this.timeDisplay.toSeconds() === 0) { 
@@ -64,6 +64,7 @@ export class TimerComponent implements OnInit {
         }, complete: () => { 
             this.timercontrol.endTimer$.next(this.timer);
         }});
+        this.timerService.timeEvents$.next(TimerEvent.START);
     }
 
     setupRestart() {

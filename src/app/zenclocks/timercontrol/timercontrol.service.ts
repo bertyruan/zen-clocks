@@ -21,6 +21,7 @@ export class TimercontrolService {
 
     private onEnd() {
         this.nextTimer = this.endTimer$.pipe(filter(t => t.id !== undefined)).subscribe((timer : Timer) => {
+            console.log(timer);
             if(this.activeClockIndex === 0 && timer.id !== this.queue[this.activeClockIndex].id) {
                 return;
             }
@@ -36,8 +37,8 @@ export class TimercontrolService {
         });
     }
 
-    public start() {
-        if(this.activeClockIndex === this.queue.length) {
+    start = () => {
+        if(this.activeClockIndex >= this.queue.length) {
             this.restart();
             return;
         }
@@ -53,7 +54,7 @@ export class TimercontrolService {
         this.timerService.timeEvents$.next(TimerEvent.PAUSE);
     }
 
-    public restart() {
+    restart = () => {
         this.timerService.timeEvents$.next(TimerEvent.RESTART);
         this.activeClockIndex = -1;
         this.start();
@@ -61,7 +62,6 @@ export class TimercontrolService {
     
     public addToQueue(timer: TimeValue) : number {
         const id = Math.floor(Math.random() * 1000) + Math.floor(Math.random() * 1000) * Math.floor(Math.random() * 1000);
-        //const order = this.queue.length ? this.queue[this.queue.length - 1].order + 1 : 1;
         if(this.queue.length > 0 ) { 
             this.queue[this.queue.length - 1].isLast = false; 
         }

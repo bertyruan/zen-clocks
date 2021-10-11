@@ -33,17 +33,15 @@ export class TimerService {
         ).subscribe(() => { this.exitEditMode$.next(null)});
     }
 
-    public getClock(minutes: number, seconds: number) : Observable<number> {
-        if(!this.clock) {
-            this.clock = this.initClock(minutes, seconds);
-            this.timeEvents$.next(TimerEvent.PAUSE);
-            this.timeValues$.next(new TimeValue(minutes, seconds));
-        }
-        return this.clock;
+    public getNewClock(minutes: number, seconds: number) : Observable<number> {
+        const newClock = this.initClock(minutes, seconds);
+        this.timeEvents$.next(TimerEvent.PAUSE);
+        this.timeValues$.next(new TimeValue(minutes, seconds));
+        return newClock;
     }
 
     private initClock(minutes: number, seconds: number) : Observable<number> {
-        return combineLatest([this.timeEvents$, this.timeValues$]).pipe(
+        const clock = combineLatest([this.timeEvents$, this.timeValues$]).pipe(
             filter(arr => arr[1].isValid),
             map(arr => {
                 return [arr[0], +TimeValue.toString(arr[1].minutes, arr[1].seconds)] 
@@ -51,7 +49,7 @@ export class TimerService {
             switchMap(arr => {
                 let t = arr[0];
                 if(t === TimerEvent.PAUSE) return NEVER;
-                return interval(1000).pipe(mapTo([TimerEvent.START, arr[1]]), startWith(arr));
+                return interval(1000).pipe(mapTo(arr));
             }),
             scan((timeLeft : number, arr)=> {
                 if(arr[0] === TimerEvent.NEWTIME) return arr[1] + 1;
@@ -59,7 +57,8 @@ export class TimerService {
                 return timeLeft - 1;
             }, +minutes * 60 + +seconds + 1),
             takeWhile((timeLeft) => timeLeft >= 0)
-        )
+        );
+        return clock;
     }
 
     public onNextAudio = (() => {
