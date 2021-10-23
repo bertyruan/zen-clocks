@@ -8,6 +8,7 @@ import { ZenclocksModule } from './zenclocks/zenclocks.module';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({ 
   declarations: [
@@ -18,7 +19,8 @@ import { CommonModule } from '@angular/common';
     AppRoutingModule,
     FlexLayoutModule,
     ZenclocksModule,
-    CommonModule
+    CommonModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

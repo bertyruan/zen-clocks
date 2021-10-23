@@ -6,6 +6,7 @@ import { HomeComponent } from "./home/home.component";
 import { PortfolioRoutingModule } from "./portfolio-routing.module";
 import { PortfolioComponent } from "./portfolio.component";
 import { WorkComponent } from "./work/work.component";
+import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
     declarations: [
@@ -17,7 +18,8 @@ import { WorkComponent } from "./work/work.component";
     imports: [
         PortfolioRoutingModule,
         CommonModule,
-        FlexLayoutModule
+        FlexLayoutModule,
+        MatSliderModule 
     ],
     bootstrap: []
 })
