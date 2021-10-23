@@ -9,6 +9,7 @@ import { AboutComponent } from './about/about.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { faCaretLeft, faCaretRight, faPauseCircle, faPlayCircle, faRedo } from '@fortawesome/free-solid-svg-icons';
+import { ZenclocksRoutingModule } from './zenclocks-routing.module';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { faCaretLeft, faCaretRight, faPauseCircle, faPlayCircle, faRedo } from '
     AboutComponent
   ],
   imports: [
+    ZenclocksRoutingModule,
     CommonModule,
     FlexLayoutModule,
     ReactiveFormsModule,
