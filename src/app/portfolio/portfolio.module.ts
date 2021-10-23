@@ -1,5 +1,6 @@
+import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { AppRoutingModule } from "../app-routing.module";
+import { FlexLayoutModule } from "@angular/flex-layout";
 import { ContactComponent } from "./contact/contact.component";
 import { HomeComponent } from "./home/home.component";
 import { PortfolioRoutingModule } from "./portfolio-routing.module";
@@ -14,7 +15,9 @@ import { WorkComponent } from "./work/work.component";
         WorkComponent
     ],
     imports: [
-        PortfolioRoutingModule
+        PortfolioRoutingModule,
+        CommonModule,
+        FlexLayoutModule
     ],
     bootstrap: []
 })
