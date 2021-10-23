@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
+import { PageNotFoundComponent } from './shared/PageNotFound/page-not-found.component';
 import { TetrisComponent } from './tetris/tetris.component';
 import { ZenclocksComponent } from './zenclocks/zenclocks.component';
 
@@ -13,12 +14,9 @@ const routes: Routes = [
   {
     path: "zen-clocks",
     loadChildren: () => import("./zenclocks/zenclocks.module").then(m => m.ZenclocksModule)
-  }
-  // { path: '404', component: PageNotFoundComponent },
-  // { path: '**', redirectTo: '404' }
-  // {path: "tetris", component: TetrisComponent},
-  // {path: "timer", component: ZenclocksComponent}
-  //{path: "stopwatch", loadChildren: () => import('./stopwatch/stopwatch.module').then(m => m.StopwatchModule),}
+  },
+  { path: "404", component: PageNotFoundComponent },
+  { path: "**", redirectTo: "404" }
 ];
 
 @NgModule({
