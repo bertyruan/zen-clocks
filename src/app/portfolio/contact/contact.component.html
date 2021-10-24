@@ -1,23 +1,27 @@
 
 <div class="container">
   <form fxLayout fxLayoutAlign="center" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
-    <mat-card fxLayout="column" class="contact-card">
-      <mat-card-title class="contact-card-title">Contact Me</mat-card-title>
-      <mat-form-field>
-        <input matInput placeholder="First Name" formControlName="firstName">
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="Email" formControlName="email">
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="Subject" formControlName="subject"> 
-      </mat-form-field>
-      <mat-form-field appearance="fill">
-        <textarea matInput class="message-body" placeholder="Message" formControlName="messageBody"></textarea>
-      </mat-form-field>
-      <mat-card-actions>
-        <button mat-raised-button color="primary" type="submit" [disabled]="!contactForm.valid">Submit</button>
-      </mat-card-actions>
+    <mat-card fxLayout="row" class="contact-card">
+      <div fxFlex="5"></div>
+      <div fxFlex="auto" fxLayout="column">
+        <mat-card-title class="contact-card-title">Contact Me</mat-card-title>
+        <mat-form-field>
+          <input matInput placeholder="First Name" formControlName="firstName">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Email" formControlName="email">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Subject" formControlName="subject"> 
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <textarea matInput class="message-body" placeholder="Message" formControlName="messageBody"></textarea>
+        </mat-form-field>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" type="submit">Submit</button>
+        </mat-card-actions>
+      </div>
+      <div fxFlex="5"></div>
     </mat-card>
   </form>
 </div>
