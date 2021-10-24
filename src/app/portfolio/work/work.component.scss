@@ -16,6 +16,20 @@
 //   right: 10px;
 // }
 
+.container {
+  .title {
+    padding: 2em 0 0 2em;
+  }
+  mat-card {
+    background-color: #F9FAFB;
+    color: #495057;
+    
+    mat-card-title {
+      margin-top: .5em;
+    }
+  }
+}
+
 .dashboard-card-content {
   margin: 1em;
   line-height: 1.5em;

@@ -1,0 +1,19 @@
+.container {
+    padding: 3em 0;
+
+    mat-card {
+        background-color: #F9FAFB;
+        padding: 2em 0 2em 0;
+
+        mat-card-title {
+            font-size: 34px;
+        }
+    
+        mat-card-content {
+            margin-top: 1em;
+            line-height: 1.4em;
+            font-size: 20px;
+            color: #495057;   
+        }
+    }
+}
