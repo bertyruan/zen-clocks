@@ -18,13 +18,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
     declarations: [
         PortfolioComponent,
         ContactComponent, 
         HomeComponent, 
-        WorkComponent
+        WorkComponent, AboutComponent
     ],
     imports: [
         PortfolioRoutingModule,
