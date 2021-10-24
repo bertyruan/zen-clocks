@@ -7,26 +7,16 @@ import { FormBuilder, Validators } from "@angular/forms";
     styleUrls: ["./contact.component.scss"]
 })
 export class ContactComponent {
-    addressForm = this.fb.group({
-        company: null,
+    contactForm = this.fb.group({
         firstName: [null, Validators.required],
-        lastName: [null, Validators.required],
-        address: [null, Validators.required],
-        address2: null,
-        city: [null, Validators.required],
-        state: [null, Validators.required],
-        postalCode: [null, Validators.compose([
-          Validators.required, Validators.minLength(5), Validators.maxLength(5)])
-        ],
-        shipping: ['free', Validators.required]
+        email: [null, Validators.email],
+        subject: [null, Validators.required],
+        messageBody: [null, Validators.required]
       });
-
       
     constructor(private fb: FormBuilder) {}
 
-  onSubmit(): void {
-    alert('Thanks!');
-  }
-
-  hasUnitNumber = true;
+    onSubmit(): void {
+      alert('Thanks!');
+    }
 }
