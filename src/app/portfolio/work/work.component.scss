@@ -10,12 +10,19 @@
   bottom: 15px;
 }
 
-.more-button {
-  position: absolute;
-  top: 5px;
-  right: 10px;
-}
+// .more-button {
+//   position: absolute;
+//   top: 5px;
+//   right: 10px;
+// }
 
 .dashboard-card-content {
-  text-align: center;
+  margin: 1em;
+  line-height: 1.5em;
+  text-align: justify;
+}
+
+.navigation-button {
+  display: block;
+  margin: 4em auto 0 auto;
 }
