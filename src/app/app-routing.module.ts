@@ -15,6 +15,10 @@ const routes: Routes = [
     path: "zen-clocks",
     loadChildren: () => import("./zenclocks/zenclocks.module").then(m => m.ZenclocksModule)
   },
+  {
+    path: "ethermine",
+    loadChildren: () => import("./ethermine/ethermine.module").then(m => m.EthermineModule)
+  },
   { path: "404", component: PageNotFoundComponent },
   { path: "**", redirectTo: "404" }
 ];
