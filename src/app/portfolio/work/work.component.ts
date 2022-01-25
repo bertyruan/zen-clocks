@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./work.component.scss']
 })
 export class WorkComponent {
-  staticDir = "static"
+  staticDir = "portfolio"
 
   works = [
     {
@@ -29,7 +29,7 @@ export class WorkComponent {
         Screen elements adjust for desktop, tablet and mobile phone screen sizes.
         The languages used are HTML5 and CSS3.  
       `,
-      route: "./static/fem-meetup"
+      route: `./${this.staticDir}/fem-meetup`
     }
   ]
   /** Based on the screen size, switch from standard to one column per row */
