@@ -16,8 +16,8 @@ const routes: Routes = [
     loadChildren: () => import("./zenclocks/zenclocks.module").then(m => m.ZenclocksModule)
   },
   {
-    path: "ethermine",
-    loadChildren: () => import("./ethermine/ethermine.module").then(m => m.EthermineModule)
+    path: "crowdfunding",
+    loadChildren: () => import("./crowdfunding/crowdfunding.module").then(m => m.CrowdfundingModule)
   },
   { path: "404", component: PageNotFoundComponent },
   { path: "**", redirectTo: "404" }

@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CrowdfundingModule } from './crowdfunding/crowdfunding.module';
 
 @NgModule({ 
   declarations: [
@@ -20,7 +21,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FlexLayoutModule,
     ZenclocksModule,
     CommonModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    CrowdfundingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
