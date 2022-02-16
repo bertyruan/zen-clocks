@@ -24,12 +24,20 @@ export class WorkComponent {
     {
       title: "Meet App | Landing Page",
       description: `
-        A landing page for the Meet App - design provided by Frontend Metor. 
+        A landing page for the Meet App - design provided by Frontend Mentor. 
         Built mobile first and incorporates accessibility best practices. 
         Screen elements adjust for desktop, tablet and mobile phone screen sizes.
         The languages used are HTML5 and CSS3.  
       `,
       route: `./${this.staticDir}/fem-meetup/index.html`
+    },
+    {
+      title: "Social Proof | Landing Page",
+      description: `
+        A responsive web page. It displays customers' ratings and reviews for your products. Built with HTML5 and CSS3. 
+        The site was designed by Frontend Mentor.
+      `,
+      route: `./${this.staticDir}/fem-social-proof/index.html`
     }
   ]
   /** Based on the screen size, switch from standard to one column per row */
@@ -38,13 +46,14 @@ export class WorkComponent {
       if (matches) {
         return [
           { isVisible: true, work: this.works[0], cols: 3, rows: 1 },
-          { isVisible: true, work: this.works[1], cols: 3, rows: 1 }
+          { isVisible: true, work: this.works[1], cols: 3, rows: 1 },
+          { isVisible: true, work: this.works[2], cols: 3, rows: 1 }
         ];
       }
       return [
         { isVisible: true, work: this.works[0], cols: 1, rows: 1 },
-        { isVisible: true, work: this.works[1], cols: 1, rows: 1 }
-  
+        { isVisible: true, work: this.works[1], cols: 1, rows: 1 },
+        { isVisible: true, work: this.works[2], cols: 1, rows: 1 }
       ];
     })
   );
