@@ -6,27 +6,28 @@ import { TetrisComponent } from './tetris/tetris.component';
 import { ZenclocksComponent } from './zenclocks/zenclocks.component';
 
 const routes: Routes = [
-  {path: "", redirectTo: "portfolio", pathMatch: 'full'},
+  // { path: '', redirectTo: 'portfolio', pathMatch: 'full' },
+  // {
+  //   path: 'portfolio',
+  //   loadChildren: () =>
+  //     import('./portfolio/portfolio.module').then((m) => m.PortfolioModule),
+  // },
   {
-    path: "portfolio",
-    loadChildren: () => import("./portfolio/portfolio.module").then(m => m.PortfolioModule)
-  },
-  {
-    path: "zen-clocks",
-    loadChildren: () => import("./zenclocks/zenclocks.module").then(m => m.ZenclocksModule)
+    path: '',
+    pathMatch: 'full',
+    loadChildren: () =>
+      import('./zenclocks/zenclocks.module').then((m) => m.ZenclocksModule),
   },
   // {
   //   path: "portfolio/crowdfunding",
   //   loadChildren: () => import("./crowdfunding/crowdfunding.module").then(m => m.CrowdfundingModule)
   // },
-  { path: "404", component: PageNotFoundComponent },
-  { path: "**", redirectTo: "404" }
+  { path: '404', component: PageNotFoundComponent },
+  { path: '**', redirectTo: '404' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [
-    RouterModule
-  ]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
