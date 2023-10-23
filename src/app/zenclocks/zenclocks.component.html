@@ -1,26 +1,29 @@
 <div class="container" (click)="exitTimerEditMode()" #container>
-    <div id="menu">
-        <div id="menu-container">
-            <button class="menu-button" (click)="onSave(timercontrol.timerName)">Save</button>
-            <button class="menu-button" (click)="onPopupOpen()">Open</button>
-        </div>
+  <div id="menu">
+    <div id="menu-container">
+      <button class="menu-button" (click)="onSave(timercontrol.timerName)">
+        Save
+      </button>
+      <button class="menu-button" (click)="onPopupOpen()">Open</button>
     </div>
-    <div>
-        <h1>Zen Clocks</h1>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="center">
-        <div fxFlex="5"></div>
-        <app-zc-about fxFlex="20"></app-zc-about>
-        <div fxFlex="5"></div>
-        <app-zc-timercontrol #timercontrol fxFlex="auto" setName=setName></app-zc-timercontrol>
-        <div fxFlex="30"></div>
-    </div>
+  </div>
+  <div>
+    <h1>Zen Clocks</h1>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="center">
+    <div fxFlex="30"></div>
+    <app-zc-timercontrol
+      #timercontrol
+      fxFlex="auto"
+      setName="setName"
+    ></app-zc-timercontrol>
+    <div fxFlex="30"></div>
+  </div>
 </div>
-<div [ngClass]="isPopupOpened ? greyScreen : '' ">
-    <div id="menu-popups">
-        <ng-template [ngIf]="isPopupOpened">
-            <app-zc-menu (onClose)="onClose($event)"></app-zc-menu>
-        </ng-template>
-    </div>
+<div [ngClass]="isPopupOpened ? greyScreen : ''">
+  <div id="menu-popups">
+    <ng-template [ngIf]="isPopupOpened">
+      <app-zc-menu (onClose)="onClose($event)"></app-zc-menu>
+    </ng-template>
+  </div>
 </div>
-
